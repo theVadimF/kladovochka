@@ -66,52 +66,59 @@
       </div>
     </div>
   </header>
-  <div class="content-wrap form_wrap">
+  <div class="content-wrap form_wrap" data-pickup-type="">
     <p class="form_topper">Для сдачи вещей необходимо заполнить информацию ниже</p>
     <div class="form_steps">
-      <button class="transparent_btn form_step">
+      <button class="transparent_btn form_step __type" data-step="type">
         <p class="step_text">
           <span class="bold">Способ: </span>
-          <span class="contents">вызвать курьера</span>
+          <span class="contents"></span>
         </p>
         <img src="./img/ico/edit_pencil.png" alt="" class="icon">
       </button>
-      <button class="transparent_btn form_step">
-        <p class="step_text">
-          <span class="bold">Дата и время работы терминала: </span>
-          <span class="contents"><span class="date">20 сентября 2023</span> с <span class="time-from">09:00</span> до <span class="time-to">12:00</span></span>
-        </p>
-        <img src="./img/ico/edit_pencil.png" alt="" class="icon">
-      </button>
-      <button class="transparent_btn form_step">
-        <p class="step_text">
-          <span class="bold">Когда: </span>
-          <span class="contents"><span class="date">20 сентября 2023</span> с <span class="time-from">09:00</span> до <span class="time-to">12:00</span></span>
-        </p>
-        <img src="./img/ico/edit_pencil.png" alt="" class="icon">
-      </button>
-      <button class="transparent_btn form_step">
-        <p class="step_text">
-          <span class="bold">Адрес: </span>
-          <span class="contents"><span class="address">ул. Ленина, дом 7</span><span class="flat_num">, квартира 20</span></span>
-        </p>
-        <img src="./img/ico/edit_pencil.png" alt="" class="icon">
-      </button>
-      <button class="transparent_btn form_step">
+      <button class="transparent_btn form_step __terminal_address" data-step="terminal_address">
         <p class="step_text">
           <span class="bold">Терминал: </span>
-          <span class="contents">ул. Ленина, 1</span>
+          <span class="contents"></span>
         </p>
         <img src="./img/ico/edit_pencil.png" alt="" class="icon">
       </button>
-      <button class="transparent_btn form_step">
+      <button class="transparent_btn form_step __terminal_hours" data-step="terminal_hours">
+        <p class="step_text">
+          <span class="bold">Дата и время работы терминала: </span>
+          <span class="contents">
+            <span class="date"></span> с <span class="time-from"></span> до <span class="time-to"></span>
+          </span>
+        </p>
+        <img src="./img/ico/edit_pencil.png" alt="" class="icon">
+      </button>
+      <button class="transparent_btn form_step __when" data-step="when">
+        <p class="step_text">
+          <span class="bold">Когда: </span>
+          <span class="contents">
+            <span class="date"></span> с <span class="time-from"></span> до <span class="time-to"></span>
+          </span>
+        </p>
+        <img src="./img/ico/edit_pencil.png" alt="" class="icon">
+      </button>
+      <button class="transparent_btn form_step __address" data-step="address">
+        <p class="step_text">
+          <span class="bold">Адрес: </span>
+          <span class="contents">
+            <span class="address">ул. Ленина, дом 7</span>
+            <span class="flat_num">, квартира 20</span>
+          </span>
+        </p>
+        <img src="./img/ico/edit_pencil.png" alt="" class="icon">
+      </button>
+      <button class="transparent_btn form_step __properties" data-step="properties">
         <p class="step_text">
           <span class="bold">Свойства вещей: </span>
           <span class="contents">хрупкое</span>
         </p>
         <img src="./img/ico/edit_pencil.png" alt="" class="icon">
       </button>
-      <button class="transparent_btn form_step">
+      <button class="transparent_btn form_step __box_count" data-step="box_count">
         <p class="step_text">
           <span class="bold">Коробки в заявке: </span>
           <span class="contents">2 штуки</span>
@@ -119,7 +126,7 @@
         <img src="./img/ico/edit_pencil.png" alt="" class="icon">
       </button>
     </div>
-    <div class="form_dialog">
+    <div class="form_dialog __type __first __shown" data-step="type">
       <p class="form_title">Как вы хотите сдать вещи?</p>
       <div class="form_options">
         <div class="radio_wrap">
@@ -130,7 +137,7 @@
           <label for="courier" class="radio_label">Вызвать курьера</label>
         </div>
         <div class="radio_wrap">
-          <input class="radio_input" type="radio" name="deposit_type" id="terminal" value="courier">
+          <input class="radio_input" type="radio" name="deposit_type" id="terminal" value="terminal">
           <label for="terminal" class="radio_circle">
             <div class="point"></div>
           </label>
@@ -138,18 +145,18 @@
         </div>
       </div>
     </div>
-    <div class="form_dialog">
+    <div class="form_dialog __choose_terminal" data-step="choose_terminal">
       <p class="form_title">Выберите терминал</p>
       <div class="form_options_flex">
         <div class="radio_wrap">
-          <input class="radio_input" type="radio" name="terminal" id="lenina" value="courier" checked>
+          <input class="radio_input" type="radio" name="terminal" id="lenina" value="ул. Ленина, 1" checked>
           <label for="lenina" class="checkbox_box">
             <img src="./img/ico/check.png" alt="" class="check">
           </label>
           <label for="lenina" class="radio_label">ул. Ленина, 1</label>
         </div>
         <div class="radio_wrap">
-          <input class="radio_input" type="radio" name="terminal" id="krasniy" value="courier">
+          <input class="radio_input" type="radio" name="terminal" id="krasniy" value="Красный пр-т, 2">
           <label for="krasniy" class="checkbox_box">
             <img src="./img/ico/check.png" alt="" class="check">
           </label>
@@ -157,7 +164,7 @@
         </div>
       </div>
     </div>
-    <div class="form_dialog">
+    <div class="form_dialog __choose_date" data-step="choose_date">
       <p class="form_title">Выберите дату и время</p>
       <div class="form_content">
         <div class="date_block">
@@ -234,26 +241,26 @@
         </div>
       </div>
     </div>
-    <div class="form_dialog">
+    <div class="form_dialog __address" data-step="address">
       <p class="form_title">Напишите адрес</p>
       <div class="form_fields form_content">
-        <input type="text" class="form_input" placeholder="Адрес">
-        <input type="text" class="form_input" placeholder="Квартира">
+        <input type="text" class="form_input __address" placeholder="Адрес">
+        <input type="number" class="form_input __flat_num" placeholder="Квартира">
         <input type="text" class="form_input __wide" placeholder="Комментарий">
       </div>
     </div>
-    <div class="form_dialog">
+    <div class="form_dialog __properties" data-step="properties">
       <p class="form_title">Отметьте свойства вещей</p>
       <div class="form_options">
         <div class="checkbox_wrap">
-          <input class="checkbox_input" type="checkbox" name="deposit_type" id="fragile" value="courier">
+          <input class="checkbox_input" type="checkbox" name="deposit_type" id="fragile" value="хрупкое">
           <label for="fragile" class="checkbox_box">
             <img src="./img/ico/check.png" alt="" class="check">
           </label>
           <label for="fragile" class="checkbox_label">Хрупкое</label>
         </div>
         <div class="checkbox_wrap">
-          <input class="checkbox_input" type="checkbox" name="deposit_type" id="noflip" value="courier">
+          <input class="checkbox_input" type="checkbox" name="deposit_type" id="noflip" value="нельзя переворачивать">
           <label for="noflip" class="checkbox_box">
             <img src="./img/ico/check.png" alt="" class="check">
           </label>
@@ -261,7 +268,7 @@
         </div>
       </div>
     </div>
-    <div class="form_dialog __box_add">
+    <div class="form_dialog __box_add" data-step="box_add">
       <p class="form_title">Введите габариты и добавьте еще коробки при необходимости</p>
       <div class="box_list">
         <button class="transparent_btn box_edit text">

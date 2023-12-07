@@ -411,6 +411,15 @@ a.beige_btn {
   padding: 32px 35px;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.10);
   margin-top: 35px;
+  display: none;
+}
+
+.form_dialog.__first {
+  margin-top: 0;
+}
+
+.form_dialog.__shown {
+  display: block;
 }
 
 .form_title {
@@ -502,10 +511,18 @@ a.beige_btn {
   margin-top: 48px;
 }
 
+.form_wrap .form_next.__hidden {
+  display: none;
+}
+
 .form_steps .form_step {
-  display: flex;
+  display: none;
   gap: 16px;
   cursor: pointer;
+}
+
+.form_steps .form_step.__shown {
+  display: flex;
 }
 
 .form_steps .form_step .step_text {
@@ -700,6 +717,12 @@ a.beige_btn {
   font-weight: 400;
   line-height: normal;
   margin-top: 15px;
+  margin-bottom: 20px;
+  display: none;
+}
+
+.form_wrap .legal_text.__shown {
+  display: block;
 }
 
 .form_wrap .legal_text .inline_link {
@@ -727,6 +750,11 @@ a.beige_btn {
 
 .form_wrap .terminal_info {
   margin-top: 28px;
+  display: none;
+}
+
+.form_wrap .terminal_info.__shown {
+  display: block;
 }
 
 .form_wrap .terminal_info .map_wrap {
@@ -741,6 +769,11 @@ a.beige_btn {
 
 .form_wrap .form_submit {
   margin-top: 53px;
+  display: none;
+}
+
+.form_wrap .form_submit.__shown {
+  display: block;
 }
 
 .form_wrap .date_wrap {
