@@ -178,6 +178,7 @@ function form_final() {
 }
 
 $('.form_wrap .form_next').click(function() {
+  console.log($('.form_wrap .form_dialog.__shown').data('step'));
   switch ($('.form_wrap .form_dialog.__shown').data('step')) {
     case "type":
       form_type_next();
@@ -196,8 +197,60 @@ $('.form_wrap .form_next').click(function() {
       break;
     case 'box_add':
       form_final();
+      break;
     default:
-      console.error("Unknown next step");
+      console.error("Unknown next step, fallback to beginning");
+      hide_active_form();
+      hide_steps(0);
+      $('.form_wrap .form_next').removeClass('__hidden');
+      $('.form_wrap .form_submit').removeClass('__shown');
+      $('.form_wrap .legal_text').removeClass('__shown');
+      $('.form_wrap .terminal_info').removeClass('__shown');
+      $('.form_wrap .form_dialog.__type').addClass('__shown');
+      break;
+  }
+})
+
+function hide_steps(pos) {
+  $('.form_wrap .form_steps .form_step').each(function() {
+    if ($(this).data('pos') >= pos) {
+      $(this).removeClass('__shown');
+    }
+  })
+}
+
+$('.form_wrap .form_steps .form_step').click(function() {
+  hide_steps($(this).data('pos'));
+  hide_active_form();
+  $('.form_wrap .form_next').removeClass('__hidden');
+  $('.form_wrap .form_submit').removeClass('__shown');
+  $('.form_wrap .legal_text').removeClass('__shown');
+  $('.form_wrap .terminal_info').removeClass('__shown');
+  switch ($(this).data('step')) {
+    case "type":
+      $('.form_wrap .form_dialog.__type').addClass('__shown');
+      break;
+    case "terminal_address":
+      $('.form_wrap .form_dialog.__choose_terminal').addClass('__shown');
+      break
+    case "terminal_hours":
+      $('.form_wrap .form_dialog.__choose_date').addClass('__shown');
+      break;
+    case "when":
+      $('.form_wrap .form_dialog.__choose_date').addClass('__shown');
+      break;
+    case "address":
+      $('.form_wrap .form_dialog.__address').addClass('__shown');
+      break;
+    case "properties":
+      $('.form_wrap .form_dialog.__properties').addClass('__shown');
+      break;
+    case "box_count":
+      $('.form_wrap .form_dialog.__box_add').addClass('__shown');
+      break;
+    default:
+      console.error("Unknown step, fallback to beginning");
+      $('.form_wrap .form_dialog.__type').addClass('__shown');
       break;
   }
 })
