@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./js/lib/swiper/swiper-bundle.min.css">
+</head>
+<body>
+  <div class="mobile_menu_wrap" style="display: none;">
+    <div class="mask"></div>
+    <div class="mobile_menu">
+      <div class="topper">
+        <a href="" class="logo __white">КЛАДОВОЧКА</a>
+      </div>
+      <div class="contents">
+        <div class="main_links">
+          <a href="" class="link">
+            <img src="./img/ico/package.png" alt="" class="icon">
+            <span>Сдать вещи</span>
+          </a>
+          <a href="" class="link">
+            <img src="./img/ico/package_open.png" alt="" class="icon">
+            <span>Вернуть вещи</span>
+          </a>
+        </div>
+        <div class="bottom">
+          <a href="tel:+70002223344" class="phone">+7 000 222 33 44</a>
+          <div class="messangers">
+            <a href="" class="msg">
+              <img src="./img/ico/whatsapp.png" alt="" class="msg_icon">
+            </a>
+            <a href="" class="msg">
+              <img src="./img/ico/telegram.png" alt="" class="msg_icon">
+            </a>
+          </div>
+          <button class="transparent_btn exit">Выйти</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <header>
+    <div class="header-wrap">
+      <div class="left">
+        <button class="transparent_btn open_mobile_menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="35" height="20" viewBox="0 0 35 20" fill="none">
+            <rect width="35" height="4" rx="2" fill="#CEA075"/>
+            <rect y="16" width="35" height="4" rx="2" fill="#CEA075"/>
+            <rect y="8" width="35" height="4" rx="2" fill="#CEA075"/>
+          </svg>
+        </button>
+        <a href="" class="logo">КЛАДОВОЧКА</a>
+      </div>
+      <div class="right">
+        <a href="tel:+70002223344" class="phone">+7 000 222 33 44</a>
+        <div class="messangers">
+          <a href="" class="msg">
+            <img src="./img/ico/whatsapp.png" alt="" class="msg_icon">
+          </a>
+          <a href="" class="msg">
+            <img src="./img/ico/telegram.png" alt="" class="msg_icon">
+          </a>
+        </div>
+        <button class="transparent_btn exit">Выйти</button>
+      </div>
+    </div>
+  </header>
+  <div class="content-wrap courier_return">
+    <p class="bold_heading">Ваш тариф: Personal</p>
+    <div class="long_nav">
+      <button class="nav_btn __active">Хранится сейчас</button>
+      <button class="nav_btn">Едет на склад</button>
+      <button class="nav_btn">Возвращено</button>
+      <button class="nav_btn">Заказан возврат</button>
+    </div>
+    <p class="form_topper">Как вернуть?</p>
+    <p class="main_text">
+      Бесплатно в терминале.<br>
+      <br>
+      С нашей доставкой - 1490 р. за 1 м3 (с округлением до 1 м3 вверх, минимальная сумма доставки 1490 р. по любым тарифам).<br>
+      <br>
+      <strong>Точную стоимость возврата рассчитают курьеры на месте.</strong>
+    </p>
+    <div class="form_options">
+      <div class="radio_wrap">
+        <input class="radio_input" type="radio" name="deposit_type" id="courier" value="courier" checked>
+        <label for="courier" class="radio_circle">
+          <div class="point"></div>
+        </label>
+        <label for="courier" class="radio_label">Вызвать курьера</label>
+      </div>
+      <div class="radio_wrap">
+        <input class="radio_input" type="radio" name="deposit_type" id="terminal" value="terminal">
+        <label for="terminal" class="radio_circle">
+          <div class="point"></div>
+        </label>
+        <label for="terminal" class="radio_label">Сдать в терминале</label>
+      </div>
+    </div>
+    <div class="request_info">
+      <p class="return_info">
+        <strong>Заявка: 002</strong><br>
+        <strong>Дата: </strong>08.11.23<br>
+        <strong>ФИО: </strong>Комаров Игорь Игоревич<br>
+        <strong>Адрес: </strong>ул. Первая, 11<br>
+        <strong>Квартира: </strong>20<br>
+        <strong>Комментарий: </strong>позвоните за 30 мин до приезда<br>
+        <strong>Свойство вещей: </strong>хрупкое, нельзя переворачивать
+      </p>
+      <p class="topper">Вещи в заявке:</p>
+      <div class="boxes">
+        <div class="box">
+          <div class="checkbox_wrap">
+            <input class="checkbox_input" type="checkbox" name="deposit_type" id="box1" value="1">
+            <label for="box1" class="checkbox_box">
+              <img src="./img/ico/check.png" alt="" class="check">
+            </label>
+            <label for="box1" class="checkbox_label">коробка 1</label>
+          </div>
+          <p class="return_info">
+            <strong>Статус:</strong> хранится на складе<br>
+            <strong>Комментарий:</strong> в коробке две лампы
+          </p>
+        </div>
+        <div class="box">
+          <div class="checkbox_wrap">
+            <input class="checkbox_input" type="checkbox" name="deposit_type" id="box2" value="1">
+            <label for="box2" class="checkbox_box">
+              <img src="./img/ico/check.png" alt="" class="check">
+            </label>
+            <label for="box2" class="checkbox_label">коробка 2</label>
+          </div>
+          <p class="return_info">
+            <strong>Статус:</strong> хранится на складе<br>
+            <strong>Комментарий:</strong> в коробке спорт инвентарь
+          </p>
+        </div>
+        <div class="box">
+          <div class="checkbox_wrap">
+            <input class="checkbox_input" type="checkbox" name="deposit_type" id="box3" value="1">
+            <label for="box3" class="checkbox_box">
+              <img src="./img/ico/check.png" alt="" class="check">
+            </label>
+            <label for="box3" class="checkbox_label">коробка 3</label>
+          </div>
+          <p class="return_info">
+            <strong>Статус:</strong> хранится на складе<br>
+            <strong>Комментарий:</strong> в коробке книги
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="date_block">
+      <p class="form_title">Дата</p>
+      <div class="date_wrap">
+        <div class="swiper date_slider">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <button class="date_btn __active" data-fulldate="20 сентября 2023">20.09.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="21 сентября 2023">21.09.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="22 сентября 2023">22.09.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="23 сентября 2023">23.09.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="24 сентября 2023">24.09.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="25 сентября 2023">25.09.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="26 сентября 2023">26.09.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="27 сентября 2023">27.09.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="28 сентября 2023">28.09.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="29 сентября 2023">29.09.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="30 сентября 2023">30.09.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="1 Октября 2023">01.10.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="2 Октября 2023">02.10.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="3 Октября 2023">03.10.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="4 Октября 2023">04.10.23</button>
+            </div>
+            <div class="swiper-slide">
+              <button class="date_btn" data-fulldate="5 Октября 2023">05.10.23</button>
+            </div>
+          </div>
+        </div>
+        <button class="transparent_btn nav next">
+          <img src="./img/ico/arrow-right.png" alt="" class="arrow">
+        </button>
+        <button class="transparent_btn nav prev">
+          <img src="./img/ico/arrow-right.png" alt="" class="arrow">
+        </button>
+      </div>
+    </div>
+    <div class="time_block">
+      <p class="form_title">Время</p>
+      <div class="time_slots">
+        <button class="time_slot_btn __active" data-time-from="09:00" data-time-to="12:00">09:00 — 12:00</button>
+        <button class="time_slot_btn" data-time-from="12:00" data-time-to="15:00">12:00 — 15:00</button>
+        <button class="time_slot_btn" data-time-from="15:00" data-time-to="18:00">15:00 — 18:00</button>
+        <button class="time_slot_btn" data-time-from="18:00" data-time-to="21:00">18:00 — 21:00</button>
+      </div>
+    </div>
+    <button class="beige_btn submit">Оформить возврат</button>
+    <p class="legal_text">Нажимая кнопку “Оформить возврат”, вы соглашаетесь с <a class="inline_link" href="">офертой</a> </p>
+  </div>
+</body>
+<script src="./js/lib/jquery-3.7.1.min.js"></script>
+<script src="./js/lib/swiper/swiper-bundle.js"></script>
+<script src="./js/script.js"></script>
+<script src="./js/deposit_logic.js"></script>
+</html>
