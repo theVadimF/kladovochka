@@ -916,6 +916,16 @@ a.beige_btn {
   gap: 16px;
 }
 
+.request_info .boxes .box_name {
+  color: #CEA075;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 6px;
+}
+
 .request_info .boxes .box .checkbox_wrap {
   margin-bottom: 6px;
 }
@@ -931,6 +941,19 @@ a.beige_btn {
 
 .courier_return .submit {
   margin-top: 30px;
+}
+
+.form_wrap .long_nav {
+  margin-top: 35px;
+  margin-bottom: 30px;
+}
+
+.user_return {
+  margin-top: 33px;
+}
+
+.user_return .long_nav {
+  margin-top: 35px;
 }
 
 @media (max-width: 980px) {
@@ -1022,6 +1045,7 @@ a.beige_btn {
   .form_dialog {
     padding: 13px 5px;
     padding-bottom: 20px;
+    margin-top: 27px;
   }
 
   .form_dialog .form_options_flex {
@@ -1106,6 +1130,48 @@ a.beige_btn {
   .request_info {
     padding: 11px 5px;
     margin-top: 30px;
+  }
+
+  .request_info .boxes .box_name {
+    font-size: 18px;
+  }
+
+  .content-wrap-mobile-escape {
+    margin-left: -20px;
+    width: calc(100% + 40px);
+    max-width: unset;
+  }
+
+  .user_return .long_nav {
+    margin-top: 27px;
+  }
+
+  .user_return {
+    margin-top: 24px;
+  }
+
+  .form_wrap .form_steps {
+    margin-top: 11px;
+  }
+
+  .form_wrap .form_next {
+    margin-top: 15px;
+  }
+
+  .form_wrap .terminal_info {
+    margin-top: 30px;
+  }
+
+  .form_wrap .terminal_info .map_wrap {
+    margin-top: 22px;
+  }
+
+  .form_wrap .form_submit {
+    margin-top: 25px;
+  }
+
+  .form_wrap {
+    margin-top: 24px;
   }
 }
 
