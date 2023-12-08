@@ -509,14 +509,22 @@ a.beige_btn {
   margin-top: 36px;
 }
 
-.courier_return .request_info {
+.request_info {
   padding: 11px 35px;
   background: #FFF;
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.10);
   margin-top: 39px;
 }
 
-.courier_return .request_info .topper {
+.form_wrap .request_info {
+  display: none;
+}
+
+.form_wrap .request_info.__shown {
+  display: block;
+}
+
+.request_info .topper {
   color: #474A3D;
   font-family: Montserrat;
   font-size: 16px;
@@ -526,7 +534,7 @@ a.beige_btn {
   margin-bottom: 12px;
 }
 
-.courier_return .return_info {
+.request_info .return_info {
   color: #474A3D;
   font-family: Montserrat;
   font-size: 16px;
@@ -535,11 +543,11 @@ a.beige_btn {
   line-height: 150%;
 }
 
-.courier_return .return_info strong {
+.request_info .return_info strong {
   font-weight: 600;
 }
 
-.courier_return .boxes .return_info {
+.request_info .boxes .return_info {
   line-height: normal;
 }
 
@@ -902,17 +910,17 @@ a.beige_btn {
   margin-bottom: 25px;
 }
 
-.courier_return .boxes {
+.request_info .boxes {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.courier_return .boxes .box .checkbox_wrap {
+.request_info .boxes .box .checkbox_wrap {
   margin-bottom: 6px;
 }
 
-.courier_return .boxes .box .checkbox_wrap .checkbox_label {
+.request_info .boxes .box .checkbox_wrap .checkbox_label {
   color: #CEA075;
   font-weight: 600;
 }
@@ -1095,7 +1103,7 @@ a.beige_btn {
     font-size: 18px;
   }
 
-  .courier_return .request_info {
+  .request_info {
     padding: 11px 5px;
     margin-top: 30px;
   }

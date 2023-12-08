@@ -83,23 +83,24 @@ function form_terminal_next() {
   $('.form_steps .form_step.__terminal_address').addClass("__shown");
 }
 
+function set_date_in_btn(button_subclass) {
+  $(`.form_steps .form_step.${button_subclass} .contents .date`).text(
+    $('.form_wrap .date_wrap .date_btn.__active').data('fulldate')
+  )
+
+  $(`.form_steps .form_step.${button_subclass} .contents .time-from`).text(
+    $('.form_dialog .time_block .time_slots .time_slot_btn.__active').data('time-from')
+  )
+
+  $(`.form_steps .form_step.${button_subclass} .contents .time-to`).text(
+    $('.form_dialog .time_block .time_slots .time_slot_btn.__active').data('time-to')
+  )
+  $(`.form_steps .form_step.${button_subclass}`).addClass("__shown");
+}
+
+
 function form_date_next() {
   hide_active_form();
-  function set_date_in_btn(button_subclass) {
-    $(`.form_steps .form_step.${button_subclass} .contents .date`).text(
-      $('.form_wrap .date_wrap .date_btn.__active').data('fulldate')
-    )
-
-    $(`.form_steps .form_step.${button_subclass} .contents .time-from`).text(
-      $('.form_dialog .time_block .time_slots .time_slot_btn.__active').data('time-from')
-    )
-
-    $(`.form_steps .form_step.${button_subclass} .contents .time-to`).text(
-      $('.form_dialog .time_block .time_slots .time_slot_btn.__active').data('time-to')
-    )
-    $(`.form_steps .form_step.${button_subclass}`).addClass("__shown");
-  }
-
   if ($('.form_wrap').data('pickup-type') === 'courier') {
     set_date_in_btn('__when');
     $('.form_wrap .form_dialog.__address').addClass('__shown');
@@ -164,7 +165,7 @@ function form_final() {
   $('.form_wrap .legal_text').addClass('__shown');
 }
 
-$('.form_wrap .form_next').click(function() {
+$('.form_wrap .form_next.__deposit').click(function() {
   switch ($('.form_wrap .form_dialog.__shown').data('step')) {
     case "type":
       form_type_next();
@@ -199,6 +200,44 @@ $('.form_wrap .form_next').click(function() {
   }
 })
 
+function return_form_type_next() {
+  if ($('.form_wrap .form_dialog.__type .form_options input:checked').val() === 'courier') {
+    // SWITCH PAGE HERE
+  } else {
+    hide_active_form();
+    $('.form_wrap').data('pickup-type', 'terminal')
+    $('.form_steps .form_step.__type .contents').text('сдать в терминале');
+    $('.form_wrap .form_dialog.__choose_terminal').addClass('__shown');
+    $('.form_steps .form_step.__type').addClass("__shown");
+  }
+}
+
+function return_form_final() {
+  hide_active_form();
+  set_date_in_btn('__terminal_hours');
+  $('.form_wrap .form_next').addClass('__hidden');
+  $('.form_wrap .form_submit').addClass('__shown');
+  $('.form_wrap .legal_text').addClass('__shown');
+  $('.form_wrap .request_info').addClass("__shown");
+}
+
+$('.form_wrap .form_next.__return').click(function() {
+  switch ($('.form_wrap .form_dialog.__shown').data('step')) {
+    case "type":
+      return_form_type_next();
+      break;
+    case "choose_terminal":
+      form_terminal_next();
+      break;
+    case "choose_date":
+      return_form_final();
+      break;
+    default:
+      console.error("Unknown next step");
+      break;
+  }
+})
+
 function hide_steps(pos) {
   $('.form_wrap .form_steps .form_step').each(function() {
     if ($(this).data('pos') >= pos) {
@@ -214,8 +253,9 @@ $('.form_wrap .form_steps .form_step').click(function() {
   $('.form_wrap .form_submit').removeClass('__shown');
   $('.form_wrap .legal_text').removeClass('__shown');
   $('.form_wrap .terminal_info').removeClass('__shown');
-  $('.form_wrap .form_topper.__initial').removeClass('__hidden')
-  $('.form_wrap .form_topper.__final').addClass('__hidden')
+  $('.form_wrap .request_info').removeClass('__shown');
+  $('.form_wrap .form_topper.__initial').removeClass('__hidden');
+  $('.form_wrap .form_topper.__final').addClass('__hidden');
   switch ($(this).data('step')) {
     case "type":
       $('.form_wrap .form_dialog.__type').addClass('__shown');
