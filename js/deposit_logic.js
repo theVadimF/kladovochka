@@ -79,6 +79,9 @@ function form_terminal_next() {
   $('.form_steps .form_step.__terminal_address .contents').text(
     $('.form_wrap .form_dialog.__choose_terminal .form_options_flex input:checked').val()
   );
+  $('.form_wrap .terminal_info .terminal_address').text(
+    $('.form_wrap .form_dialog.__choose_terminal .form_options_flex input:checked').val()
+  );
   $('.form_wrap .form_dialog.__choose_date').addClass('__shown');
   $('.form_steps .form_step.__terminal_address').addClass("__shown");
 }
@@ -106,6 +109,12 @@ function form_date_next() {
     $('.form_wrap .form_dialog.__address').addClass('__shown');
   } else {
     set_date_in_btn('__terminal_hours');
+    $('.form_wrap .terminal_info .time-from').text(
+      $('.form_dialog .time_block .time_slots .time_slot_btn.__active').data('time-from')
+    );
+    $('.form_wrap .terminal_info .time-to').text(
+      $('.form_dialog .time_block .time_slots .time_slot_btn.__active').data('time-to')
+    );
     $('.form_wrap .form_dialog.__properties').addClass('__shown');
   }
 }
@@ -215,6 +224,7 @@ function return_form_type_next() {
 function return_form_final() {
   hide_active_form();
   set_date_in_btn('__terminal_hours');
+  $('.form_wrap .terminal_info').addClass('__shown');
   $('.form_wrap .form_next').addClass('__hidden');
   $('.form_wrap .form_submit').addClass('__shown');
   $('.form_wrap .legal_text').addClass('__shown');
