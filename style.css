@@ -105,6 +105,30 @@ table {
   padding-left: 20px;
 }
 
+.content-wrap.__no_padding {
+  padding: 0;
+}
+
+.lk_top .bold_heading {
+  margin-top: 33px;
+}
+
+.lk_top .long_nav {
+  margin-top: 35px;
+}
+
+.admin-wrap {
+  max-width: 1058px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.admin-wrap.__no_padding {
+  padding: 0;
+}
+
 .transparent_btn {
   background: none;
   border: none;
@@ -123,6 +147,63 @@ table {
 
 .logo.__white {
   color: #FFF;
+}
+
+.dropdown_wrap {
+  max-width: 160px;
+  width: 100%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.dropdown_wrap .dropdown_btn {
+  width: 100%;
+  background: #FFF;
+  color: #474A3D;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 5px 13px;
+  text-align: left;
+  border: 1px solid #B8B8B8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.dropdown_wrap .contents_outer {
+  position: relative;
+}
+
+.dropdown_wrap .contents {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.dropdown_wrap .contents .option {
+  padding-right: 0;
+}
+
+.dropdown_wrap .contents .option:hover {
+  background: #FEE8D4;
+}
+
+.dropdown_wrap .contents_outer.__shown .contents {
+  display: block;
+}
+
+.dropdown_wrap.__hide_selected .contents .option.__selected {
+  display: none;
+}
+
+.dropdown_wrap .contents.__open {
+  display: block;
 }
 
 header {
@@ -376,6 +457,7 @@ a.beige_btn {
   height: 100%;
   width: 100%;
   z-index: 3;
+  pointer-events: none;
 }
 
 .mobile_menu_wrap .mask {
@@ -388,6 +470,10 @@ a.beige_btn {
   width: 100%;
   opacity: 0;
   transition: opacity 0.5s;
+}
+
+.mobile_menu_wrap.__animate_in {
+  pointer-events: all;
 }
 
 .mobile_menu_wrap.__animate_in .mask {
@@ -956,6 +1042,94 @@ a.beige_btn {
   margin-top: 35px;
 }
 
+.admin-wrap .top_bar .orders_fitlers {
+  display: flex;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.admin-wrap .top_bar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.admin-wrap .top_bar .admin_search {
+  color: #474A3D;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: 1px solid #B8B8B8;
+  background: #FFF;
+  padding: 5px 13px;
+  max-width: 160px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.admin-wrap .top_bar .admin_search::placeholder {
+  color: #B8B8B8;
+}
+
+.admin_orders .grid {
+  display: grid;
+  grid-template-columns: 160px 180px 260px 1fr 10px;
+  gap: 8px;
+}
+
+.admin_orders .topper {
+  margin-top: 20px;
+  padding: 13px 12px;
+  box-sizing: border-box;
+  border-top: 1px solid #B8B8B8;
+  border-bottom: 1px solid #B8B8B8;
+}
+
+.admin_orders .topper .text {
+  color: #CEA075;
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.admin_orders .text {
+  color: #474A3D;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.admin_orders .text .bold_info {
+  font-weight: 600;
+  display: none;
+}
+
+.admin_orders .order_box {
+  padding: 15px 11px;
+  padding-right: 59px;
+  box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.10);
+  background-color: #FFF;
+}
+
+.admin_orders .order_box .expand_icon {
+  margin-top: 5px;
+}
+
+.admin_orders .order_box.__open .expand_icon {
+  transform: rotate(180deg);
+}
+
+.admin_orders .order_box.__open .text .bold_info {
+  display: inline;
+}
+
+
 @media (max-width: 980px) {
   .user_home_top {
     display: flex;
@@ -981,6 +1155,26 @@ a.beige_btn {
 
   .mobile_menu_wrap {
     display: block;
+  }
+}
+
+@media (max-width: 897px) {
+  .lk_top.content-wrap .bold_heading {
+    margin-left: 17px;
+  }
+
+  .lk_top.content-wrap .long_nav {
+    margin-left: 17px;
+  }
+}
+
+@media (max-width: 1075px) {
+  .lk_top.admin-wrap .bold_heading {
+    margin-left: 17px;
+  }
+
+  .lk_top.admin-wrap .long_nav {
+    margin-left: 17px;
   }
 }
 
@@ -1020,6 +1214,7 @@ a.beige_btn {
 
   .user_home_top {
     padding: 0;
+    margin-top: 24px;
   }
 
   .user_home_top .bold_heading {
@@ -1171,6 +1366,18 @@ a.beige_btn {
   }
 
   .form_wrap {
+    margin-top: 24px;
+  }
+
+  .lk_top.content-wrap .long_nav,  .lk_top.admin-wrap .long_nav{
+    margin-left: 0px;
+  }
+
+  .lk_top .long_nav {
+    margin-top: 27px;
+  }
+
+  .lk_top .bold_heading {
     margin-top: 24px;
   }
 }
