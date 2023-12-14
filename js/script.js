@@ -28,3 +28,17 @@ $('.dropdown_wrap .contents .option').click(function() {
   $wrap.children('.contents_outer').removeClass('__shown');
   $(this).addClass('__selected');
 })
+
+$('.admin_orders .order_box .order_grid').click(function(e) {
+  if (!$(this).parent().hasClass('__open')) {
+    $(this).parent().addClass('__open');
+  }
+})
+
+$('.admin_orders .order_box .toggle_order').click(function() {
+  $(this).parents('.order_box').toggleClass('__open');
+})
+
+$('.admin_orders .order_box .status').click(function() {
+  $(this).parents('.order_box').toggleClass('__open');
+})
