@@ -42,3 +42,21 @@ $('.admin_orders .order_box .toggle_order').click(function() {
 $('.admin_orders .order_box .status').click(function() {
   $(this).parents('.order_box').toggleClass('__open');
 })
+
+$('.popup .scanner .close').click(function() {
+  $('.popup.__scanner').fadeOut('fast');
+})
+
+// $('.admin_orders .box_wrap').on('changeData', function (e) {
+//   console.log("CHANGED");
+//   let fuck = new QRCode("qrcode", {
+//     text: 'fucku',
+//     width: 128,
+//     height: 128,
+//     colorDark: "#000000",
+//     colorLight: "#ffffff",
+//     correctLevel: QRCode.CorrectLevel.H
+//   });
+//   // genQR($(this).data('qr'))
+//   // console.log($(this).data('qr'));
+// })

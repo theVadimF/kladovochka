@@ -312,6 +312,11 @@ header .exit {
   border: none;
 }
 
+.beige_btn:disabled {
+  background: #B8B8B8;
+  cursor: not-allowed;
+}
+
 a.beige_btn {
   display: block;
   text-decoration: none;
@@ -1106,6 +1111,79 @@ a.beige_btn {
   line-height: normal;
 }
 
+.admin_orders .box_wrap {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 0 10px;
+  align-items: center;
+}
+
+.admin_orders .boxes_initial {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.admin_orders .boxes_initial .box_topper {
+  grid-column: 1/3;
+  display: none;
+}
+
+.admin_orders .boxes_initial .box_topper.__shown {
+  display: block;
+}
+
+.admin_orders .boxes_initial .box_btn {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  color: #CEA075;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.admin_orders .boxes_initial .box_btn.__added {
+  color: #474A3D;
+  font-weight: 400;
+}
+
+.admin_orders .boxes_initial .box_btn.__added .preview {
+  border: 2px dashed #474A3D;
+}
+
+.admin_orders .boxes_initial .box_btn .preview {
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+  border: 2px dashed #CEA075;
+}
+
+.admin_orders .boxes_initial .box_btn:disabled {
+  color: #B8B8B8;
+  cursor: not-allowed;
+}
+
+.admin_orders .boxes_initial .box_img_input {
+  display: none;
+}
+
+.admin_orders .boxes_initial .box_img_input:disabled + .box_img_btn {
+  color: #B8B8B8;
+  cursor: not-allowed;
+}
+
+.admin_orders .boxes_initial .box_img_input:disabled + .box_img_btn .preview {
+  border: 2px dashed #B8B8B8;
+  filter: grayscale(100%);
+}
+
+.admin_orders .boxes_initial .box_btn:disabled .preview {
+  border: 2px dashed #B8B8B8;
+  filter: grayscale(100%);
+}
+
 .admin_orders .bold_info {
   font-weight: 600;
 }
@@ -1168,6 +1246,11 @@ a.beige_btn {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  margin-top: 7px
+}
+
+.admin_orders .order_box.__open .bottom .text {
+  margin-top: 22px;
 }
 
 .admin_orders .orders {
@@ -1175,6 +1258,107 @@ a.beige_btn {
   flex-direction: column;
   gap: 10px;
   margin-top: 10px;
+}
+
+.admin_orders .dialog_btn.__hidden {
+  display: none;
+}
+
+.admin_orders .order_box.__open .bottom_btns {
+  margin-top: 35px;
+}
+
+.admin_orders .order_box .bottom_btns .bottom_btn.__hidden {
+  display: none;
+}
+
+.admin_orders .order_box .hidden_block {
+  display: none;
+}
+
+.admin_orders .order_box.__open .hidden_block {
+  display: block;
+}
+
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(71, 74, 61, 0.85);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup .scanner {
+  background-color: #FFF;
+  width: 100%;
+  max-width: 800px;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.popup .scanner .select_wrap {
+  border: 1px solid #B8B8B8;
+  background: #FFF;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 5px 13px;
+}
+
+.popup .scanner .viewport {
+  min-height: 120px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 1px solid #B8B8B8;
+}
+
+.popup .scanner .controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.popup .scanner .controls .text {
+  font-size: 16px;
+}
+
+.popup .scanner .controls .close {
+  margin-left: auto;
+}
+
+.viewport.__error .status_img.__wait {
+  display: none;
+}
+
+.status_img.__error {
+  /* color: var(--error-col); */
+  display: none;
+}
+
+.viewport.__error .status_img.__error {
+  display: block;
+}
+
+.popup .scanner .select {
+  -webkit-appearance: none;
+  background: #FFF;
+  border: none;
+  color: #474A3D;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 @media (max-width: 980px) {
@@ -1497,6 +1681,28 @@ a.beige_btn {
 
   .logo {
     font-size: 28px;
+  }
+}
+
+@media (max-width: 850px) {
+  .popup .scanner {
+    /* height: 100%; */
+    width: 100%;
+    max-height: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .popup .scanner .controls .text {
+    font-size: 14px;
+  }
+
+  .popup .scanner .select {
+    font-size: 14px;
+  }
+
+  .popup .scanner .select_wrap {
+    padding: 12px 10px;
   }
 }
 
