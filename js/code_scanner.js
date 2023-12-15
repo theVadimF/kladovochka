@@ -1,5 +1,5 @@
-const genQR = (data) => {
-  let qr = new QRCode("qrcode", {
+const genQR = (data, id) => {
+  const qr = new QRCode("qrcode", {
     text: data.decodedText,
     width: 365,
     height: 365,
@@ -7,7 +7,11 @@ const genQR = (data) => {
     colorLight: "#ffffff",
     correctLevel: QRCode.CorrectLevel.H
   })
-  // console.log(qr._el.children[1].attributes);
+  let base64 = qr._oDrawing._elCanvas.toDataURL("image/png");
+  $('#' + id + " .preview.__qr").attr('src', base64);
+  $('#' + id + " .box_status.__qr").text("Штрих-код добавлен");
+  $('#' + id + " .box_scan_btn").addClass("__added");
+  $('#' + id + " .box_img_btn").prop("disabled", false);
 }
 
 const handleResult = (data) => {
@@ -15,11 +19,7 @@ const handleResult = (data) => {
   $('#' + id).data('qr', data.decodedText);
   $('#' + id).trigger("changeData");
   $('.popup.__scanner').fadeOut('fast');
-  genQR(data);
-  setTimeout(function () {
-    // console.log($("#qrcode img").attr('src'));
-    $('#' + id + " .preview.__qr").attr('src', $("#qrcode img").attr('src'));
-  })
+  genQR(data, id);
 }
 
 const startScanner = (html5QrCode, cameraId, boxWidth, boxHeight) => {
