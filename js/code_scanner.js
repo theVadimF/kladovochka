@@ -12,6 +12,7 @@ const genQR = (data, id) => {
   $('#' + id + " .box_status.__qr").text("Штрих-код добавлен");
   $('#' + id + " .box_scan_btn").addClass("__added");
   $('#' + id + " .box_img_btn").prop("disabled", false);
+  $('#' + id + " .topper").addClass('__shown');
 }
 
 const handleResult = (data) => {

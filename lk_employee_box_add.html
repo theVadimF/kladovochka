@@ -66,6 +66,7 @@
       </div>
     </div>
   </header>
+  <!-- needed for qrcode generation -->
   <div class="qrcode" id="qrcode" style="display: none;"></div>
   <div class="popup __scanner" style="display: none;" data-target-id="">
     <div class="scanner">
@@ -170,24 +171,24 @@
             </div>
             <div class="boxes_initial">
               <div class="box_wrap" id="box001_1" data-qr="">
-                <p class="text bold_info box_topper __shown">Коробка 1</p>
+                <p class="text bold_info box_topper">Коробка 1</p>
                 <button class="transparent_btn box_btn box_scan_btn text">
-                  <span class="box_status">Штрих-код добавлен</span>
-                  <img src="./img/ico/img_placeholder.png" alt="" class="preview">
+                  <span class="box_status">Добавьте штрих-код коробки 1</span>
+                  <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
                 </button>
-                <input type="file" id="001_01" class="box_img_input">
-                <button class="transparent_btn box_btn box_img_btn text __added">
-                  <span class="box_status">Фото добавлено</span>
-                  <img src="./img/ico/img_placeholder.png" alt="" class="preview">
+                <input type="file" id="001_01" class="box_img_input" accept="image/*">
+                <button class="transparent_btn box_btn box_img_btn text" disabled>
+                  <span class="box_status">Добавьте фото коробки 1</span>
+                  <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">
                 </button>
               </div>
               <div class="box_wrap" id="box001_2" data-qr="">
-                <p class="text bold_info box_topper __shown">Коробка 2</p>
+                <p class="text bold_info box_topper">Коробка 2</p>
                 <button class="transparent_btn box_btn box_scan_btn text">
                   <span class="box_status __qr">Добавьте штрих-код коробки 2</span>
                   <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
                 </button>
-                <input type="file" id="001_02" class="box_img_input">
+                <input type="file" id="001_02" class="box_img_input" accept="image/*">
                 <button class="transparent_btn box_btn box_img_btn text" disabled>
                   <span class="box_status __img">Добавьте фото коробки 2</span>
                   <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">

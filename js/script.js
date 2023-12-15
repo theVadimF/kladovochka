@@ -47,16 +47,29 @@ $('.popup .scanner .close').click(function() {
   $('.popup.__scanner').fadeOut('fast');
 })
 
-// $('.admin_orders .box_wrap').on('changeData', function (e) {
-//   console.log("CHANGED");
-//   let fuck = new QRCode("qrcode", {
-//     text: 'fucku',
-//     width: 128,
-//     height: 128,
-//     colorDark: "#000000",
-//     colorLight: "#ffffff",
-//     correctLevel: QRCode.CorrectLevel.H
-//   });
-//   // genQR($(this).data('qr'))
-//   // console.log($(this).data('qr'));
-// })
+$('.admin_orders .boxes_initial .box_img_btn').click(function() {
+  if ($(this).hasClass('__added')) {
+    console.log('WIP')
+  } else {
+    console.log($(this).siblings('.box_img_input'));
+    $(this).siblings('.box_img_input').click();
+  }
+})
+
+$('.admin_orders .boxes_initial .box_img_input').on('change', function(e) {
+  console.log(this.files);
+  let file = this.files[0];
+  let that = this;
+  if (file) {
+    let reader = new FileReader();
+    reader.onload = function(event){
+      console.log(event.target.result);
+      // $('.admin_orders .boxes_initial .box_btn .preview.__img').attr('src', event.target.result);
+      console.log($(that).siblings('.box_img_btn').children('.preview.__img')[0]);
+      $($(that).siblings('.box_img_btn').children('.preview.__img')[0]).attr('src', event.target.result);
+      $(that).siblings('.box_img_btn').addClass('__added')
+      $(that).siblings('.box_img_btn').children('.box_status').text('Фото добавлено');
+    }
+    reader.readAsDataURL(file);
+  }
+})
