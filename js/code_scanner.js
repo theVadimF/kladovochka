@@ -19,7 +19,8 @@ const handleResult = (data) => {
   let id = $('.popup.__scanner').data("target-id");
   $('#' + id).data('qr', data.decodedText);
   $('#' + id).trigger("changeData");
-  $('.popup.__scanner').fadeOut('fast');
+  // $('.popup.__scanner').fadeOut('fast');
+  $('.popup.__scanner').removeClass('__shown');
   genQR(data, id);
 }
 
@@ -34,7 +35,7 @@ const startScanner = (html5QrCode, cameraId, boxWidth, boxHeight) => {
       handleResult(decodedResult);
       html5QrCode.stop();
     }).catch((err) => {
-    console.log(err)
+    console.error(err)
   });
 }
 
@@ -80,11 +81,14 @@ const findSuitableCamera = (cameras) => {
 
   return cameras[0].id;
 }
+
+let html5QrCode = null
+
 const Scanner = (cameras) => {
   let current_width = 250;
   let current_height = 250;
   let current_cam = findSuitableCamera(cameras);
-  const html5QrCode = new Html5Qrcode("viewport");  // elementId
+  html5QrCode = new Html5Qrcode("viewport");  // elementId
 
   cameraSelector(cameras, current_cam);
   startScanner(html5QrCode, current_cam, current_width, current_height);
@@ -117,6 +121,12 @@ const Scanner = (cameras) => {
   })
 }
 
+$('.popup .scanner .close').click(function() {
+  html5QrCode.stop();
+  // $('.popup.__scanner').fadeOut('fast');
+  $('.popup.__scanner').removeClass('__shown');
+})
+
 const showError = (msg) => {
   $('.scanner .status_text').text(msg);
   $('.scanner .viewport').addClass('__error')
@@ -134,18 +144,32 @@ const Init = () => {
     }
   }).catch(err => {
     // Permission denied
-    console.log(err);
+    console.error(err);
     showError('Нет доступа к камерам')
   });
 }
 
 $('.admin_orders .boxes_initial .box_scan_btn').click(function() {
-  console.log($(this).parent().attr('id'));
   if ($(this).hasClass('__added')) {
-    console.log('WIP')
+    $('.popup.__img_preview .preview').attr('src',
+      $($(this).children('.preview')).attr('src')
+    );
+    $('.popup.__img_preview .replace').removeClass('__shown');
+    $('.popup.__img_preview .replace.__qr').addClass('__shown');
+    $('.popup.__img_preview .replace.__qr').data('target-id',
+      $($(this).parents('.box_wrap')[0]).attr('id')
+    );
+    $('.popup.__img_preview').addClass('__shown');
   } else {
     $('.popup.__scanner').data("target-id", $(this).parent().attr('id'));
-    $('.popup.__scanner').fadeIn('fast')
+    $('.popup.__scanner').addClass('__shown');
     Init();
   }
+})
+
+$('.popup .float_buttons .replace.__qr').click(function() {
+  $('.popup.__scanner').data("target-id", $(this).data('target-id'));
+  $('.popup.__img_preview').removeClass('__shown');
+  $('.popup.__scanner').addClass('__shown');
+  Init();
 })

@@ -43,13 +43,17 @@ $('.admin_orders .order_box .status').click(function() {
   $(this).parents('.order_box').toggleClass('__open');
 })
 
-$('.popup .scanner .close').click(function() {
-  $('.popup.__scanner').fadeOut('fast');
-})
-
 $('.admin_orders .boxes_initial .box_img_btn').click(function() {
   if ($(this).hasClass('__added')) {
-    console.log('WIP')
+    $('.popup.__img_preview .preview').attr('src',
+      $($(this).children('.preview')).attr('src')
+    );
+    $('.popup.__img_preview .replace').removeClass('__shown');
+    $('.popup.__img_preview .replace.__img').addClass('__shown');
+    $('.popup.__img_preview .replace.__img').data('target-id',
+      $($(this).parents('.box_wrap')[0]).attr('id')
+    );
+    $('.popup.__img_preview').addClass('__shown');
   } else {
     console.log($(this).siblings('.box_img_input'));
     $(this).siblings('.box_img_input').click();
@@ -57,19 +61,25 @@ $('.admin_orders .boxes_initial .box_img_btn').click(function() {
 })
 
 $('.admin_orders .boxes_initial .box_img_input').on('change', function(e) {
-  console.log(this.files);
   let file = this.files[0];
   let that = this;
   if (file) {
     let reader = new FileReader();
     reader.onload = function(event){
-      console.log(event.target.result);
-      // $('.admin_orders .boxes_initial .box_btn .preview.__img').attr('src', event.target.result);
       console.log($(that).siblings('.box_img_btn').children('.preview.__img')[0]);
       $($(that).siblings('.box_img_btn').children('.preview.__img')[0]).attr('src', event.target.result);
+      $('.popup.__img_preview .preview').attr('src', event.target.result);
       $(that).siblings('.box_img_btn').addClass('__added')
       $(that).siblings('.box_img_btn').children('.box_status').text('Фото добавлено');
     }
     reader.readAsDataURL(file);
   }
+})
+
+$('.popup.__img_preview .float_buttons .close').click(function() {
+  $('.popup.__img_preview').removeClass('__shown');
+})
+
+$('.popup .float_buttons .replace.__img').click(function() {
+  $('#' + $(this).data('target-id')).children('.box_img_input').click();
 })

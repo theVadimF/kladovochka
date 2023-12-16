@@ -125,6 +125,10 @@ table {
   padding-left: 20px;
 }
 
+.admin-wrap.__relative {
+  position: relative;
+}
+
 .admin-wrap.__no_padding {
   padding: 0;
 }
@@ -1158,6 +1162,7 @@ a.beige_btn {
   height: 25px;
   padding: 5px;
   border: 2px dashed #CEA075;
+  object-fit: contain;
 }
 
 .admin_orders .boxes_initial .box_btn:disabled {
@@ -1291,6 +1296,18 @@ a.beige_btn {
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.popup.__shown {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.popup.__block {
+  display: block;
 }
 
 .popup .scanner {
@@ -1359,6 +1376,56 @@ a.beige_btn {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+.popup .float_buttons {
+  position: absolute;
+  right: 10px;
+  top: 70px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.popup .float_buttons .beige_btn {
+  padding: 4px 16px;
+  font-size: 16px;
+  height: 30px;
+}
+
+.popup .float_buttons .replace {
+  display: none;
+}
+
+.popup .float_buttons .replace.__shown {
+  display: block;
+}
+
+.popup .float_buttons .close {
+  height: 30px;
+  cursor: pointer;
+}
+
+.popup .float_buttons .close .icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.popup.__img_preview .preview_wrap {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.popup.__img_preview .preview {
+  object-fit: contain;
+  max-height: 650px;
+  max-width: 650px;
+  width: 100%;
+  height: 100%;
+  margin-top: 160px;
 }
 
 @media (max-width: 980px) {
