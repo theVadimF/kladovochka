@@ -69,7 +69,7 @@ $('.admin_orders .boxes_initial .box_img_input').on('change', function(e) {
       console.log($(that).siblings('.box_img_btn').children('.preview.__img')[0]);
       $($(that).siblings('.box_img_btn').children('.preview.__img')[0]).attr('src', event.target.result);
       $('.popup.__img_preview .preview').attr('src', event.target.result);
-      $(that).siblings('.box_img_btn').addClass('__added')
+      $(that).siblings('.box_img_btn').addClass('__added').trigger('boxBtnUpdate');
       $(that).siblings('.box_img_btn').children('.box_status').text('Фото добавлено');
     }
     reader.readAsDataURL(file);
@@ -82,4 +82,18 @@ $('.popup.__img_preview .float_buttons .close').click(function() {
 
 $('.popup .float_buttons .replace.__img').click(function() {
   $('#' + $(this).data('target-id')).children('.box_img_input').click();
+})
+
+
+$('.admin_orders .boxes_initial .box_btn').on('boxBtnUpdate', function() {
+  let flag = true;
+  $('.admin_orders .boxes_initial .box_btn').each(function() {
+    if (!$(this).hasClass('__added')) {
+      flag = false;
+    }
+  })
+  if (flag) {
+    $('.admin_orders .order_box .bottom_btns .accept_btn').attr('disabled', false);
+  }
+  console.log(flag);
 })

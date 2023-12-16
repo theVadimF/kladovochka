@@ -187,12 +187,12 @@
               <div class="box_wrap" id="box001_1" data-qr="">
                 <p class="text bold_info box_topper">Коробка 1</p>
                 <button class="transparent_btn box_btn box_scan_btn text">
-                  <span class="box_status">Добавьте штрих-код коробки 1</span>
+                  <span class="box_status __qr">Добавьте штрих-код коробки 1</span>
                   <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
                 </button>
                 <input type="file" id="001_01" class="box_img_input" accept="image/*">
-                <button class="transparent_btn box_btn box_img_btn text" disabled>
-                  <span class="box_status">Добавьте фото коробки 1</span>
+                <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off">
+                  <span class="box_status __img">Добавьте фото коробки 1</span>
                   <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">
                 </button>
               </div>
@@ -203,15 +203,15 @@
                   <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
                 </button>
                 <input type="file" id="001_02" class="box_img_input" accept="image/*" capture>
-                <button class="transparent_btn box_btn box_img_btn text">
+                <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off">
                   <span class="box_status __img">Добавьте фото коробки 2</span>
                   <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">
                 </button>
               </div>
             </div>
             <div class="bottom_btns box_wrap">
-              <button class="beige_btn bottom_btn __white">Добавить ещё коробку</button>
-              <button class="beige_btn bottom_btn">Принять</button>
+              <button class="beige_btn bottom_btn __white add_box">Добавить ещё коробку</button>
+              <button class="beige_btn bottom_btn accept_btn" disabled autocomplete="off">Принять</button>
             </div>
           </div>
           <button class="transparent_btn toggle_order">

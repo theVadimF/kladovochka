@@ -1158,9 +1158,9 @@ a.beige_btn {
 }
 
 .admin_orders .boxes_initial .box_btn .preview {
-  width: 25px;
-  height: 25px;
-  padding: 5px;
+  width: 15px;
+  height: 15px;
+  padding: 3px;
   border: 2px dashed #CEA075;
   object-fit: contain;
 }
@@ -1770,6 +1770,24 @@ a.beige_btn {
 
   .popup .scanner .select_wrap {
     padding: 12px 10px;
+  }
+
+  .admin_orders .box_wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .popup.__img_preview .preview {
+    max-width: 350px;
+    max-height: 350px;
+  }
+
+  .admin_orders .boxes_initial .box_btn .preview {
+    height: 21px;
+    width: 21px;
+    padding: 5px;
   }
 }
 
