@@ -155,10 +155,12 @@ $('.admin_orders .boxes_initial .box_scan_btn').click(function() {
       $($(this).children('.preview')).attr('src')
     );
     $('.popup.__img_preview .replace').removeClass('__shown');
-    $('.popup.__img_preview .replace.__qr').addClass('__shown');
-    $('.popup.__img_preview .replace.__qr').data('target-id',
-      $($(this).parents('.box_wrap')[0]).attr('id')
-    );
+    if (!$(this).parents('.boxes_initial').hasClass('__locked')) {
+      $('.popup.__img_preview .replace.__qr').addClass('__shown');
+      $('.popup.__img_preview .replace.__qr').data('target-id',
+        $($(this).parents('.box_wrap')[0]).attr('id')
+      );
+    }
     $('.popup.__img_preview').addClass('__shown');
   } else {
     $('.popup.__scanner').data("target-id", $(this).parent().attr('id'));

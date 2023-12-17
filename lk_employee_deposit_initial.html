@@ -183,37 +183,37 @@
               <p class="text __details"><b class="bold_info">Вещи в заявке: </b>коробка 1 (1,2 кг, 50х50х80), коробка 2 (2 кг, 40х30х50)</p>
               <button class="beige_btn dialog_btn accept_initial __hidden">Принять</button>
             </div>
-            <div class="boxes_initial">
+            <!-- __locked class hides image replace button in preview -->
+            <div class="boxes_initial __locked">
               <div class="box_wrap" id="box001_1" data-qr="">
-                <p class="text bold_info box_topper">Коробка 1</p>
-                <button class="transparent_btn box_btn box_scan_btn text">
-                  <span class="box_status __qr">Добавьте штрих-код коробки 1</span>
-                  <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
+                <p class="text bold_info box_topper __shown">Коробка 1</p>
+                <button class="transparent_btn box_btn box_scan_btn text __added">
+                  <span class="box_status __qr">Штрих-код добавлен</span>
+                  <img src="./img/qr_placeholder.png" alt="" class="preview __qr">
                 </button>
                 <input type="file" id="001_01" class="box_img_input" accept="image/*">
-                <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off">
-                  <span class="box_status __img">Добавьте фото коробки 1</span>
-                  <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">
+                <button class="transparent_btn box_btn box_img_btn text __added" autocomplete="off">
+                  <span class="box_status __img">Фото добавлено</span>
+                  <img src="./img/box_img_placeholder.png" alt="" class="preview __img">
                 </button>
-                <p class="text box_status_final"><b class="bold_info">Статус: </b>Принят у клиента</p>
+                <p class="text box_status_final __shown"><b class="bold_info">Статус: </b>Принят у клиента</p>
               </div>
               <div class="box_wrap" id="box001_2" data-qr="">
-                <p class="text bold_info box_topper">Коробка 2</p>
-                <button class="transparent_btn box_btn box_scan_btn text">
-                  <span class="box_status __qr">Добавьте штрих-код коробки 2</span>
-                  <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
+                <p class="text bold_info box_topper __shown">Коробка 2</p>
+                <button class="transparent_btn box_btn box_scan_btn text __added">
+                  <span class="box_status __qr">Штрих-код добавлен</span>
+                  <img src="./img/qr_placeholder.png" alt="" class="preview __qr">
                 </button>
                 <input type="file" id="001_02" class="box_img_input" accept="image/*" capture>
-                <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off">
-                  <span class="box_status __img">Добавьте фото коробки 2</span>
-                  <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">
+                <button class="transparent_btn box_btn box_img_btn text __added" autocomplete="off">
+                  <span class="box_status __img">Фото добавлено</span>
+                  <img src="./img/box_img_placeholder.png" alt="" class="preview __img">
                 </button>
-                <p class="text box_status_final"><b class="bold_info">Статус: </b>Принят у клиента</p>
+                <p class="text box_status_final __shown"><b class="bold_info">Статус: </b>Принят у клиента</p>
               </div>
             </div>
             <div class="bottom_btns box_wrap">
-              <button class="beige_btn bottom_btn __white add_box">Добавить ещё коробку</button>
-              <button class="beige_btn bottom_btn accept_btn" disabled autocomplete="off">Принять</button>
+              <button class="beige_btn bottom_btn accept_btn">Поставить на хранение</button>
             </div>
           </div>
           <button class="transparent_btn toggle_order">

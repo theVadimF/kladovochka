@@ -49,10 +49,12 @@ $('.admin_orders .boxes_initial .box_img_btn').click(function() {
       $($(this).children('.preview')).attr('src')
     );
     $('.popup.__img_preview .replace').removeClass('__shown');
-    $('.popup.__img_preview .replace.__img').addClass('__shown');
-    $('.popup.__img_preview .replace.__img').data('target-id',
-      $($(this).parents('.box_wrap')[0]).attr('id')
-    );
+    if (!$(this).parents('.boxes_initial').hasClass('__locked')) {
+      $('.popup.__img_preview .replace.__img').addClass('__shown');
+      $('.popup.__img_preview .replace.__img').data('target-id',
+        $($(this).parents('.box_wrap')[0]).attr('id')
+      );
+    }
     $('.popup.__img_preview').addClass('__shown');
   } else {
     console.log($(this).siblings('.box_img_input'));
