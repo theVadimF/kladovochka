@@ -184,7 +184,7 @@
               <button class="beige_btn dialog_btn accept_initial __hidden">Принять</button>
             </div>
             <div class="boxes_initial" data-lock="1">
-              <div class="box_wrap" id="box001_1" data-qr="">
+              <div class="box_wrap __storage" id="box001_1" data-qr="">
                 <p class="text bold_info box_topper __shown">Коробка 1</p>
                 <button class="transparent_btn box_btn box_scan_btn text __added" data-step="1">
                   <span class="box_status __qr">Штрих-код добавлен</span>
@@ -196,6 +196,20 @@
                   <img src="./img/box_img_placeholder.png" alt="" class="preview __img">
                 </button>
                 <p class="text box_status_final __shown"><b class="bold_info">Статус: </b>Принят у клиента</p>
+                <button class="transparent_btn toggle_box">
+                  <svg class="expand_icon" xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
+                    <path d="M5 8L0.669872 0.5L9.33013 0.5L5 8Z" fill="#CEA075"></path>
+                  </svg>
+                </button>
+                <button class="transparent_btn box_btn __spot box_scan_btn text" data-step="2">
+                  <span class="box_status __qr">Отсканируйте место 1</span>
+                  <img src="./img/qr_placeholder.png" alt="" class="preview __qr">
+                </button>
+                <input type="file" id="001_01" class="box_img_input" accept="image/*" data-step="2">
+                <button class="transparent_btn box_btn __spot box_img_btn text">
+                  <span class="box_status __img">Добавьте фото хранения 1</span>
+                  <img src="./img/box_img_placeholder.png" alt="" class="preview __img">
+                </button>
               </div>
               <div class="box_wrap" id="box001_2" data-qr="">
                 <p class="text bold_info box_topper __shown">Коробка 2</p>
@@ -204,7 +218,7 @@
                   <img src="./img/qr_placeholder.png" alt="" class="preview __qr">
                 </button>
                 <input type="file" id="001_02" class="box_img_input" accept="image/*" capture>
-                <button class="transparent_btn box_btn box_img_btn text __added" autocomplete="off" data-step="1">
+                <button class="transparent_btn box_btn __step1 box_img_btn text __added" autocomplete="off" data-step="1">
                   <span class="box_status __img">Фото добавлено</span>
                   <img src="./img/box_img_placeholder.png" alt="" class="preview __img">
                 </button>
@@ -212,7 +226,7 @@
               </div>
             </div>
             <div class="bottom_btns box_wrap">
-              <button class="beige_btn bottom_btn accept_btn">Поставить на хранение</button>
+              <button class="beige_btn bottom_btn accept_btn">На хранение</button>
             </div>
           </div>
           <button class="transparent_btn toggle_order">

@@ -183,15 +183,15 @@
               <p class="text __details"><b class="bold_info">Вещи в заявке: </b>коробка 1 (1,2 кг, 50х50х80), коробка 2 (2 кг, 40х30х50)</p>
               <button class="beige_btn dialog_btn accept_initial __hidden">Принять</button>
             </div>
-            <div class="boxes_initial">
+            <div class="boxes_initial" data-lock="0">
               <div class="box_wrap" id="box001_1" data-qr="">
                 <p class="text bold_info box_topper">Коробка 1</p>
-                <button class="transparent_btn box_btn box_scan_btn text">
+                <button class="transparent_btn box_btn box_scan_btn text" data-step="1">
                   <span class="box_status __qr">Добавьте штрих-код коробки 1</span>
                   <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
                 </button>
                 <input type="file" id="001_01" class="box_img_input" accept="image/*">
-                <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off">
+                <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off" data-step="1">
                   <span class="box_status __img">Добавьте фото коробки 1</span>
                   <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">
                 </button>
@@ -199,12 +199,12 @@
               </div>
               <div class="box_wrap" id="box001_2" data-qr="">
                 <p class="text bold_info box_topper">Коробка 2</p>
-                <button class="transparent_btn box_btn box_scan_btn text">
+                <button class="transparent_btn box_btn box_scan_btn text" data-step="1">
                   <span class="box_status __qr">Добавьте штрих-код коробки 2</span>
                   <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
                 </button>
                 <input type="file" id="001_02" class="box_img_input" accept="image/*" capture>
-                <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off">
+                <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off" data-step="1">
                   <span class="box_status __img">Добавьте фото коробки 2</span>
                   <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">
                 </button>

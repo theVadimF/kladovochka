@@ -43,13 +43,20 @@ $('.admin_orders .order_box .status').click(function() {
   $(this).parents('.order_box').toggleClass('__open');
 })
 
+function check_scan_lock(obj) {
+  let $wrapper = $(obj).parents('.boxes_initial');
+  return parseInt($wrapper.data('lock')) < parseInt($(obj).data('step'));
+}
+
 $('.admin_orders .boxes_initial .box_img_btn').click(function() {
   if ($(this).hasClass('__added')) {
     $('.popup.__img_preview .preview').attr('src',
       $($(this).children('.preview')).attr('src')
     );
     $('.popup.__img_preview .replace').removeClass('__shown');
-    if (!$(this).parents('.boxes_initial').hasClass('__locked')) {
+    // if (!$(this).parents('.boxes_initial').hasClass('__locked') && !$(this).parents('.box_wrap').hasClass('__storage')) {
+    if (check_scan_lock(this)) {
+      if (!$(this).parents('.boxes_initial').hasClass('__locked_all'))
       $('.popup.__img_preview .replace.__img').addClass('__shown');
       $('.popup.__img_preview .replace.__img').data('target-id',
         $($(this).parents('.box_wrap')[0]).attr('id')
@@ -98,4 +105,16 @@ $('.admin_orders .boxes_initial .box_btn').on('boxBtnUpdate', function() {
     $('.admin_orders .order_box .bottom_btns .accept_btn').attr('disabled', false);
   }
   console.log(flag);
+})
+
+$('.admin_orders .boxes_initial .box_wrap.__storage .box_topper').click(function() {
+  $(this).parent('.box_wrap').toggleClass('__closed');
+})
+
+$('.admin_orders .boxes_initial .box_wrap.__storage .box_status_final').click(function() {
+  $(this).parent('.box_wrap').removeClass('__closed');
+})
+
+$('.admin_orders .boxes_initial .box_wrap.__storage .toggle_box').click(function() {
+  $(this).parent('.box_wrap').toggleClass('__closed');
 })

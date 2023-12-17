@@ -1117,9 +1117,47 @@ a.beige_btn {
 
 .admin_orders .box_wrap {
   display: grid;
-  grid-template-columns: 345px 260px 1fr;
-  gap: 0 10px;
+  grid-template-columns: 345px 270px 1fr;
+  gap: 0 4px;
   align-items: center;
+}
+
+.admin_orders .box_wrap.__storage {
+  background: #FFF;
+  box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.10);
+  padding: 5px 8px;
+  padding-bottom: 7px;
+  margin-left: -8px;
+  position: relative;
+}
+
+.admin_orders .box_wrap.__storage .toggle_box {
+  position: absolute;
+  padding: 10px;
+  right: 50px;
+  top: 28px;
+  cursor: pointer;
+}
+
+.admin_orders .box_wrap.__storage.__closed .toggle_box {
+  top: 0px;
+  transform: rotate(180deg);
+}
+
+.admin_orders .box_wrap.__storage.__closed {
+  grid-template-columns: 100px 1fr;
+}
+
+.admin_orders .boxes_initial .box_wrap.__storage.__closed .box_topper {
+  grid-column: 1;
+}
+
+.admin_orders .box_wrap.__storage.__closed .box_status_final {
+  margin-top: 0;
+}
+
+.admin_orders .box_wrap.__storage.__closed .box_btn {
+  display: none;
 }
 
 .admin_orders .boxes_initial {
@@ -1146,6 +1184,10 @@ a.beige_btn {
   font-weight: 600;
   cursor: pointer;
   margin-top: 8px;
+}
+
+.admin_orders .boxes_initial .box_btn.__spot {
+  margin-top: 15px;
 }
 
 .admin_orders .boxes_initial .box_btn.__added {
