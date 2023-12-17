@@ -9,7 +9,9 @@ const genQR = (data, id) => {
   })
   let base64 = qr._oDrawing._elCanvas.toDataURL("image/png");
   $('#' + id + " .preview.__qr").attr('src', base64);
-  $('#' + id + " .box_status.__qr").text("Штрих-код добавлен");
+  $('#' + id + " .box_scan_btn[data-step=" + $('.popup.__scanner').data('target-step') + "] .box_status.__qr").text(
+    $('.popup.__scanner').data("success-text")
+  );
   $('#' + id + " .box_scan_btn").addClass("__added");
   $('#' + id + " .box_img_btn").prop("disabled", false);
   $('#' + id + " .box_topper").addClass('__shown');
@@ -164,6 +166,8 @@ $('.admin_orders .boxes_initial .box_scan_btn').click(function() {
     $('.popup.__img_preview').addClass('__shown');
   } else {
     $('.popup.__scanner').data("target-id", $(this).parent().attr('id'));
+    $('.popup.__scanner').data("target-step", $(this).data('step'));
+    $('.popup.__scanner').data("success-text", $(this).data('success-text'));
     $('.popup.__scanner').addClass('__shown');
     Init();
   }

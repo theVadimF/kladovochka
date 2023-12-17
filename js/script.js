@@ -54,7 +54,6 @@ $('.admin_orders .boxes_initial .box_img_btn').click(function() {
       $($(this).children('.preview')).attr('src')
     );
     $('.popup.__img_preview .replace').removeClass('__shown');
-    // if (!$(this).parents('.boxes_initial').hasClass('__locked') && !$(this).parents('.box_wrap').hasClass('__storage')) {
     if (check_scan_lock(this)) {
       if (!$(this).parents('.boxes_initial').hasClass('__locked_all'))
       $('.popup.__img_preview .replace.__img').addClass('__shown');
@@ -79,7 +78,10 @@ $('.admin_orders .boxes_initial .box_img_input').on('change', function(e) {
       $($(that).siblings('.box_img_btn').children('.preview.__img')[0]).attr('src', event.target.result);
       $('.popup.__img_preview .preview').attr('src', event.target.result);
       $(that).siblings('.box_img_btn').addClass('__added').trigger('boxBtnUpdate');
-      $(that).siblings('.box_img_btn').children('.box_status').text('Фото добавлено');
+      $(that).siblings('.box_img_btn').children('.box_status').text(
+        // 'Фото добавлено'
+        $(that).siblings('.box_img_btn').data('success-text')
+      );
     }
     reader.readAsDataURL(file);
   }

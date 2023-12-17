@@ -1127,6 +1127,7 @@ a.beige_btn {
   box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.10);
   padding: 5px 8px;
   padding-bottom: 7px;
+  padding-right: 70px;
   margin-left: -8px;
   position: relative;
 }
