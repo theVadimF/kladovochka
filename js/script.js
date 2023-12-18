@@ -107,6 +107,7 @@ $('.admin_orders .boxes_initial .box_btn').on('boxBtnUpdate', function() {
   $('.admin_orders .boxes_initial .box_btn').each(function() {
     if (!$(this).hasClass('__added')) {
       flag = false;
+      return false;  // Break out of each loop
     }
   })
   if (flag) {
@@ -115,13 +116,13 @@ $('.admin_orders .boxes_initial .box_btn').on('boxBtnUpdate', function() {
   console.log(flag);
 })
 
-$('.admin_orders .boxes_initial .box_wrap.__storage .box_topper').click(function() {
+$('.admin_orders .boxes_initial .box_wrap.__storage .box_top').click(function() {
   $(this).parent('.box_wrap').toggleClass('__closed');
 })
 
-$('.admin_orders .boxes_initial .box_wrap.__storage .box_status_final').click(function() {
-  $(this).parent('.box_wrap').removeClass('__closed');
-})
+// $('.admin_orders .boxes_initial .box_wrap.__storage .box_status_final').click(function() {
+//   $(this).parent('.box_wrap').removeClass('__closed');
+// })
 
 $('.admin_orders .boxes_initial .box_wrap.__storage .toggle_box').click(function() {
   $(this).parent('.box_wrap').toggleClass('__closed');

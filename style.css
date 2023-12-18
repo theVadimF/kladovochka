@@ -1115,11 +1115,15 @@ a.beige_btn {
   line-height: normal;
 }
 
-.admin_orders .box_wrap {
+.admin_orders .box_wrap, .admin_orders .box_inner_wrap {
   display: grid;
   grid-template-columns: 345px 270px 1fr;
   gap: 0 4px;
   align-items: center;
+}
+
+.admin_orders .box_inner_wrap {
+  grid-column: 1/4;
 }
 
 .admin_orders .box_wrap.__storage {
@@ -1130,6 +1134,15 @@ a.beige_btn {
   padding-right: 70px;
   margin-left: -8px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.admin_orders .box_wrap.__storage .box_top {
+  display: flex;
+  gap: 60px;
+  width: 100%;
 }
 
 .admin_orders .box_wrap.__storage .toggle_box {
@@ -1138,10 +1151,11 @@ a.beige_btn {
   right: 50px;
   top: 28px;
   cursor: pointer;
+  display: flex;
 }
 
 .admin_orders .box_wrap.__storage.__closed .toggle_box {
-  top: 0px;
+  top: 3px;
   transform: rotate(180deg);
 }
 
@@ -1171,6 +1185,7 @@ a.beige_btn {
 .admin_orders .boxes_initial .box_topper {
   grid-column: 1/4;
   display: none;
+  flex-shrink: 0;
 }
 
 .admin_orders .boxes_initial .box_topper.__shown {
@@ -1478,6 +1493,7 @@ a.beige_btn {
 
 .admin_orders .order_box .box_status_final.__shown {
   display: block;
+  margin-top: 0;
 }
 
 @media (max-width: 980px) {
@@ -1861,6 +1877,20 @@ a.beige_btn {
     height: 21px;
     width: 21px;
     padding: 5px;
+  }
+
+  .admin_orders .box_wrap.__storage {
+    gap: 0px;
+    padding-right: 20px;
+  }
+
+  .admin_orders .box_wrap.__storage .toggle_box {
+    right: 0;
+    top: 5px;
+  }
+
+  .admin_orders .box_wrap.__storage .box_top {
+    gap: 20px;
   }
 }
 
