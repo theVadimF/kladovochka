@@ -8,8 +8,9 @@ const genQR = (data, id) => {
     correctLevel: QRCode.CorrectLevel.H
   })
   let base64 = qr._oDrawing._elCanvas.toDataURL("image/png");
-  $('#' + id + " .preview.__qr").attr('src', base64);
-  $('#' + id + " .box_scan_btn[data-step=" + $('.popup.__scanner').data('target-step') + "] .box_status.__qr").text(
+  let target_step = $('.popup.__scanner').data('target-step');
+  $('#' + id + " .box_scan_btn[data-step=" + target_step + "] .preview.__qr").attr('src', base64);
+    $('#' + id + " .box_scan_btn[data-step=" + target_step + "] .box_status.__qr").text(
     $('.popup.__scanner').data("success-text")
   );
   $('#' + id + " .box_scan_btn").addClass("__added");
@@ -151,18 +152,27 @@ const Init = () => {
   });
 }
 
+function check_scan_lock(obj) {
+  let $wrapper = $(obj).parents('.boxes_initial');
+  return parseInt($wrapper.data('lock')) < parseInt($(obj).data('step'));
+}
+
 $('.admin_orders .boxes_initial .box_scan_btn').click(function() {
   if ($(this).hasClass('__added')) {
     $('.popup.__img_preview .preview').attr('src',
       $($(this).children('.preview')).attr('src')
     );
     $('.popup.__img_preview .replace').removeClass('__shown');
-    if (!$(this).parents('.boxes_initial').hasClass('__locked')) {
+    // if (!$(this).parents('.boxes_initial').hasClass('__locked')) {
+    if (check_scan_lock(this)) {
       $('.popup.__img_preview .replace.__qr').addClass('__shown');
       $('.popup.__img_preview .replace.__qr').data('target-id',
         $($(this).parents('.box_wrap')[0]).attr('id')
       );
     }
+    $('.popup.__img_preview').data('target-step',
+      $(this).data('step')
+    );
     $('.popup.__img_preview').addClass('__shown');
   } else {
     $('.popup.__scanner').data("target-id", $(this).parent().attr('id'));
@@ -175,6 +185,7 @@ $('.admin_orders .boxes_initial .box_scan_btn').click(function() {
 
 $('.popup .float_buttons .replace.__qr').click(function() {
   $('.popup.__scanner').data("target-id", $(this).data('target-id'));
+  $('.popup.__scanner').data("target-step", $(this).data('target-step'));
   $('.popup.__img_preview').removeClass('__shown');
   $('.popup.__scanner').addClass('__shown');
   Init();
