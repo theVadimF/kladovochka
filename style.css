@@ -1122,6 +1122,10 @@ a.beige_btn {
   align-items: center;
 }
 
+.admin_orders .box_wrap {
+  margin-bottom: 10px;
+}
+
 .admin_orders .box_inner_wrap {
   grid-column: 1/4;
 }
@@ -1137,6 +1141,7 @@ a.beige_btn {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-bottom: 0px;
 }
 
 .admin_orders .box_wrap.__storage .box_top {
@@ -1179,7 +1184,7 @@ a.beige_btn {
   margin-top: 8px;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 18px;
 }
 
 .admin_orders .boxes_initial .box_topper {
@@ -1280,7 +1285,7 @@ a.beige_btn {
 }
 
 .admin_orders .order_box.__open {
-  padding-bottom: 38px;
+  /* padding-bottom: 38px; */
 }
 
 .admin_orders .order_box .status {
@@ -1309,7 +1314,12 @@ a.beige_btn {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-top: 7px
+  margin-top: 7px;
+  /* margin-bottom: 25px; */
+}
+
+.admin_orders .order_box.__open .bottom:has(.beige_btn:not(.__hidden)) {
+  margin-bottom: 25px;
 }
 
 .admin_orders .order_box.__open .bottom .text {
@@ -1329,6 +1339,7 @@ a.beige_btn {
 
 .admin_orders .order_box.__open .bottom_btns {
   margin-top: 35px;
+  margin-bottom: 5px;
 }
 
 .admin_orders .order_box .bottom_btns .bottom_btn.__hidden {
@@ -1891,6 +1902,10 @@ a.beige_btn {
 
   .admin_orders .box_wrap.__storage .box_top {
     gap: 20px;
+  }
+
+  .admin_orders .box_wrap {
+    margin-bottom: 0px;
   }
 }
 

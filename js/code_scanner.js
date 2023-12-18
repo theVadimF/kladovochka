@@ -195,7 +195,6 @@ $('.popup .float_buttons .replace.__qr').click(function() {
   console.log(scan_type);
   $('.popup.__scanner').data("target-id", $(this).data('target-id'));
   $('.popup.__scanner').data("target-step", $(this).data('target-step'));
-  // $('.popup.__scanner').data("scan_type", $(this).data('target-step'));
   $('.popup.__img_preview').removeClass('__shown');
   $('.popup.__scanner').addClass('__shown');
   Init(scan_type);
