@@ -1,4 +1,4 @@
-const genQR = (data, id) => {
+const updateBtn = (data, id) => {
   const qr = new QRCode("qrcode", {
     text: data.decodedText,
     width: 365,
@@ -9,23 +9,23 @@ const genQR = (data, id) => {
   })
   let base64 = qr._oDrawing._elCanvas.toDataURL("image/png");
   let target_step = $('.popup.__scanner').data('target-step');
-  console.log($('#' + id + " .box_scan_btn[data-step=" + target_step + "] .preview.__qr"));
-  $('#' + id + " .box_scan_btn[data-step=" + target_step + "] .preview.__qr").attr('src', base64);
-    $('#' + id + " .box_scan_btn[data-step=" + target_step + "] .box_status.__qr").text(
+  $(`#${id} .box_scan_btn[data-step="${target_step}"] .preview.__qr`).attr('src', base64);
+  $(`#${id} .box_scan_btn[data-step="${target_step}"] .box_status.__qr`).text(
     $('.popup.__scanner').data("success-text")
   );
-  $('#' + id + ` .box_scan_btn[data-step=${target_step}]`).addClass("__added").trigger('boxBtnUpdate');
-  $('#' + id + ` .box_img_btn[data-step=${target_step}]`).prop("disabled", false);
-  $('#' + id + " .box_topper").addClass('__shown');
+  $(`#${id} .box_scan_btn[data-step=${target_step}]`).addClass("__added").trigger('boxBtnUpdate');
+  $(`#${id} .box_img_btn[data-step=${target_step}]`).prop("disabled", false);
+  $(`#${id} .box_topper`).addClass('__shown');
 
 }
 
 const handleResult = (data) => {
   let id = $('.popup.__scanner').data("target-id");
-  $('#' + id).data('qr', data.decodedText);
+  // $('#' + id).data('qr', data.decodedText);
+  console.log(data.decodedText);
   $('#' + id).trigger("changeData");
   $('.popup.__scanner').removeClass('__shown');
-  genQR(data, id);
+  updateBtn(data, id);
 }
 
 const startScanner = (html5QrCode, cameraId, boxWidth, boxHeight) => {
@@ -106,24 +106,6 @@ const Scanner = (cameras, scan_type) => {
     reloadScanner(html5QrCode, this.value, current_width, current_height);
   })
 
-  // $('.format_btn#square').click(function() {
-  //   current_width = 250;
-  //   current_height = 250;
-  //   reloadScanner(html5QrCode, current_cam, current_width, current_height);
-  // })
-
-  // $('.format_btn#barcode').click(function() {
-  //   current_width = 300;
-  //   current_height = 150;
-  //   reloadScanner(html5QrCode, current_cam, current_width, current_height);
-  // })
-
-  // $('.format_btn#full').click(function() {
-  //   current_width = '100%';
-  //   current_height = '100%';
-  //   reloadScanner(html5QrCode, current_cam, current_width, current_height);
-  // })
-
   $(window).on("orientationchange",function() {
     reloadScanner(html5QrCode, current_cam, current_width, current_height);
   })
@@ -162,37 +144,51 @@ function check_scan_lock(obj) {
   return parseInt($wrapper.data('lock')) < parseInt($(obj).data('step'));
 }
 
+function clear_code_digits() {
+  $('.popup.__code .digit').each(function() {
+    $(this).val("");
+  })
+}
+
 $('.admin_orders .boxes_initial .box_scan_btn').click(function() {
-  if ($(this).hasClass('__added')) {
-    $('.popup.__img_preview .preview').attr('src',
-      $($(this).children('.preview')).attr('src')
-    );
-    $('.popup.__img_preview .replace').removeClass('__shown');
-    if (check_scan_lock(this)) {
-      let scan_type = $(this).data('scan-type');
-      $('.popup.__img_preview .replace.__qr').addClass('__shown');
-      $('.popup.__img_preview .replace.__qr').data('target-id',
-        $($(this).parents('.box_wrap')[0]).attr('id')
-      );
-      $('.popup.__img_preview .replace.__qr').data('scan-type', scan_type);
+  let scan_type = $(this).data('scan-type');
+  if (scan_type === 'code') {
+    if (!$(this).hasClass('__added')) {
+      clear_code_digits();
+      $('.popup.__code').data("target-id", $(this).parents('.box_wrap').attr('id'));
+      $('.popup.__code').data("target-step", $(this).data('step'));
+      $('.popup.__code').data("success-text", $(this).data('success-text'));
+      $('.popup.__code').addClass('__shown');
     }
-    $('.popup.__img_preview').data('target-step',
-      $(this).data('step')
-    );
-    $('.popup.__img_preview').addClass('__shown');
   } else {
-    let scan_type = $(this).data('scan-type');
-    $('.popup.__scanner').data("target-id", $(this).parents('.box_wrap').attr('id'));
-    $('.popup.__scanner').data("target-step", $(this).data('step'));
-    $('.popup.__scanner').data("success-text", $(this).data('success-text'));
-    $('.popup.__scanner').addClass('__shown');
-    Init(scan_type);
+    if ($(this).hasClass('__added')) {
+      $('.popup.__img_preview .preview').attr('src',
+        $($(this).children('.preview')).attr('src')
+      );
+      $('.popup.__img_preview .replace').removeClass('__shown');
+      if (check_scan_lock(this)) {
+        $('.popup.__img_preview .replace.__qr').addClass('__shown');
+        $('.popup.__img_preview .replace.__qr').data('target-id',
+          $($(this).parents('.box_wrap')[0]).attr('id')
+        );
+        $('.popup.__img_preview .replace.__qr').data('scan-type', scan_type);
+      }
+      $('.popup.__img_preview').data('target-step',
+        $(this).data('step')
+      );
+      $('.popup.__img_preview').addClass('__shown');
+    } else {
+      $('.popup.__scanner').data("target-id", $(this).parents('.box_wrap').attr('id'));
+      $('.popup.__scanner').data("target-step", $(this).data('step'));
+      $('.popup.__scanner').data("success-text", $(this).data('success-text'));
+      $('.popup.__scanner').addClass('__shown');
+      Init(scan_type);
+    }
   }
 })
 
 $('.popup .float_buttons .replace.__qr').click(function() {
   let scan_type = $(this).data('scan-type');
-  console.log(scan_type);
   $('.popup.__scanner').data("target-id", $(this).data('target-id'));
   $('.popup.__scanner').data("target-step", $(this).data('target-step'));
   $('.popup.__img_preview').removeClass('__shown');

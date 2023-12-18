@@ -127,3 +127,59 @@ $('.admin_orders .boxes_initial .box_wrap.__storage .box_top').click(function() 
 $('.admin_orders .boxes_initial .box_wrap.__storage .toggle_box').click(function() {
   $(this).parent('.box_wrap').toggleClass('__closed');
 })
+
+let $inputs = $('.popup .code_wrap .digit_wrap .digit').on('input', function(e) {
+  this.value = this.value.replace(/^0-9/g,'');
+  let $input = $(e.target);
+  let index = $inputs.index($input);
+  if ($input.val().length >= $input.prop('maxlength')) {
+    $inputs.eq(index + 1).focus();
+  }
+  if (this.value.length > 1) {
+    this.value = this.value[0];
+  }
+});
+
+function submit_code() {
+  let flag = true;
+  let code = "";
+  $('.popup .code_wrap .digit_wrap .digit').each(function() {
+    let val = $(this).val();
+    if (val.length === 0) {
+      flag = false;
+      return false;
+    }
+    code += val;
+  })
+  if (flag) {
+    console.log(code);
+    let id = $('.popup.__code').data("target-id");
+    let step = $('.popup.__code').data("target-step");
+    let text = $('.popup.__code').data("success-text");
+    $(`#${id} .box_scan_btn[data-step="${step}"]`).addClass('__added');
+    $(`#${id} .box_img_btn[data-step="${step}"]`).attr('disabled', false);
+    $(`#${id} .box_scan_btn[data-step="${step}"] .box_status`).text(text);
+    $(`#${id} .box_scan_btn[data-step="${step}"] .preview`).attr('src', "./img/qr_placeholder.png");
+    $('.popup.__code').removeClass('__shown');
+  }
+}
+
+$('.popup .code_wrap .digit_wrap .digit').on('keydown', function(e) {
+  if (e.keyCode === 8) {
+    let $input = $(e.target);
+    let index = $inputs.index($input);
+    if ($input.val().length >= $input.prop('maxlength')) {
+      if (e.target.value === "") {
+        $inputs.eq(index - 1).focus();
+      }
+    } else if (index > 0) {
+      $inputs.eq(index - 1).focus();
+    }
+  } else if (e.keyCode === 13) {
+    submit_code();
+  }
+})
+
+$('.popup.__code .close').click(function() {
+  $('.popup.__code').removeClass('__shown');
+})
