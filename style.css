@@ -1590,6 +1590,10 @@ a.beige_btn {
   -moz-appearance: textfield;
 }
 
+.admin_orders .order_box .box_inner_wrap .box_status_final {
+  margin-top: 8px;
+}
+
 @media (max-width: 980px) {
   .user_home_top {
     display: flex;

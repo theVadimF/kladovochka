@@ -165,3 +165,5 @@ $('.popup .code_wrap .digit_wrap .digit').on('keydown', function(e) {
 $('.popup.__code .close').click(function() {
   $('.popup.__code').removeClass('__shown');
 })
+
+
