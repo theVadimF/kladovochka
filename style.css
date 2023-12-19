@@ -1188,7 +1188,6 @@ a.beige_btn {
 }
 
 .admin_orders .boxes_initial .box_topper {
-  grid-column: 1/4;
   display: none;
   flex-shrink: 0;
 }
@@ -1592,6 +1591,30 @@ a.beige_btn {
 
 .admin_orders .order_box .box_inner_wrap .box_status_final {
   margin-top: 8px;
+}
+
+.admin_orders .boxes_initial .box_btn.delete_box {
+  margin-top: 0;
+  font-size: 14px;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.admin_orders .boxes_initial .box_btn.delete_box .icon {
+  height: 12px;
+  width: 12px;
+}
+
+.admin_orders .box_wrap .box_top {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 5px;
+  align-items: center;
+}
+
+.admin_orders .boxes_initial .box_inner_wrap .box_btn.__wide {
+  grid-column: 2/4;
+  grid-row: 1;
 }
 
 @media (max-width: 980px) {
