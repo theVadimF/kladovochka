@@ -1617,6 +1617,22 @@ a.beige_btn {
   grid-row: 1;
 }
 
+.admin_orders .box_wrap .box_number_wrap {
+  display: none;
+}
+
+.admin_orders .box_wrap .box_number_wrap.__shown {
+  display: inline;
+}
+
+.admin_orders .boxes_initial .box_btn.delete_box.__hidden {
+  display: none;
+}
+
+.admin_orders .boxes_initial .box_btn .box_status.__hidden {
+  display: none;
+}
+
 @media (max-width: 980px) {
   .user_home_top {
     display: flex;

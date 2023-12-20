@@ -10,9 +10,8 @@ const updateBtn = (data, id) => {
   let base64 = qr._oDrawing._elCanvas.toDataURL("image/png");
   let target_step = $('.popup.__scanner').data('target-step');
   $(`#${id} .box_scan_btn[data-step="${target_step}"] .preview.__qr`).attr('src', base64);
-  $(`#${id} .box_scan_btn[data-step="${target_step}"] .box_status.__qr`).text(
-    $('.popup.__scanner').data("success-text")
-  );
+  $(`#${id} .box_scan_btn[data-step="${target_step}"] .box_status.__qr`).addClass('__hidden');
+  $(`#${id} .box_scan_btn[data-step="${target_step}"] .box_status.__qr.__success`).removeClass('__hidden');
   $(`#${id} .box_scan_btn[data-step=${target_step}]`).addClass("__added").trigger('boxBtnUpdate');
   $(`#${id} .box_img_btn[data-step=${target_step}]`).prop("disabled", false);
   $(`#${id} .box_topper`).addClass('__shown');
@@ -150,41 +149,41 @@ function clear_code_digits() {
   })
 }
 
-$('.admin_orders .boxes_initial .box_scan_btn').click(function() {
-  let scan_type = $(this).data('scan-type');
-  if (scan_type === 'code') {
-    if (!$(this).hasClass('__added')) {
-      clear_code_digits();
-      $('.popup.__code').data("target-id", $(this).parents('.box_wrap').attr('id'));
-      $('.popup.__code').data("target-step", $(this).data('step'));
-      $('.popup.__code').data("success-text", $(this).data('success-text'));
-      $('.popup.__code').addClass('__shown');
-    }
-  } else {
-    if ($(this).hasClass('__added')) {
-      $('.popup.__img_preview .preview').attr('src',
-        $($(this).children('.preview')).attr('src')
-      );
-      $('.popup.__img_preview .replace').removeClass('__shown');
-      if (check_scan_lock(this)) {
-        $('.popup.__img_preview .replace.__qr').addClass('__shown');
-        $('.popup.__img_preview .replace.__qr').data('target-id',
-          $($(this).parents('.box_wrap')[0]).attr('id')
-        );
-        $('.popup.__img_preview .replace.__qr').data('scan-type', scan_type);
+$(document).ready(function() {
+  $(document).on("click", ".admin_orders .boxes_initial .box_scan_btn" , function() {
+    let scan_type = $(this).data('scan-type');
+    if (scan_type === 'code') {
+      if (!$(this).hasClass('__added')) {
+        clear_code_digits();
+        $('.popup.__code').data("target-id", $(this).parents('.box_wrap').attr('id'));
+        $('.popup.__code').data("target-step", $(this).data('step'));
+        $('.popup.__code').addClass('__shown');
       }
-      $('.popup.__img_preview').data('target-step',
-        $(this).data('step')
-      );
-      $('.popup.__img_preview').addClass('__shown');
     } else {
-      $('.popup.__scanner').data("target-id", $(this).parents('.box_wrap').attr('id'));
-      $('.popup.__scanner').data("target-step", $(this).data('step'));
-      $('.popup.__scanner').data("success-text", $(this).data('success-text'));
-      $('.popup.__scanner').addClass('__shown');
-      Init(scan_type);
+      if ($(this).hasClass('__added')) {
+        $('.popup.__img_preview .preview').attr('src',
+          $($(this).children('.preview')).attr('src')
+        );
+        $('.popup.__img_preview .replace').removeClass('__shown');
+        if (check_scan_lock(this)) {
+          $('.popup.__img_preview .replace.__qr').addClass('__shown');
+          $('.popup.__img_preview .replace.__qr').data('target-id',
+            $($(this).parents('.box_wrap')[0]).attr('id')
+          );
+          $('.popup.__img_preview .replace.__qr').data('scan-type', scan_type);
+        }
+        $('.popup.__img_preview').data('target-step',
+          $(this).data('step')
+        );
+        $('.popup.__img_preview').addClass('__shown');
+      } else {
+        $('.popup.__scanner').data("target-id", $(this).parents('.box_wrap').attr('id'));
+        $('.popup.__scanner').data("target-step", $(this).data('step'));
+        $('.popup.__scanner').addClass('__shown');
+        Init(scan_type);
+      }
     }
-  }
+  });
 })
 
 $('.popup .float_buttons .replace.__qr').click(function() {

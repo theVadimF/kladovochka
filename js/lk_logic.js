@@ -39,52 +39,56 @@ function check_scan_lock(obj) {
   return parseInt($wrapper.data('lock')) < parseInt($(obj).data('step'));
 }
 
-$('.admin_orders .boxes_initial .box_img_btn').click(function() {
-  if ($(this).hasClass('__added')) {
-    $('.popup.__img_preview .preview').attr('src',
-      $($(this).children('.preview')).attr('src')
-    );
-    $('.popup.__img_preview .replace').removeClass('__shown');
-    if (check_scan_lock(this)) {
-      $('.popup.__img_preview .replace.__img').addClass('__shown');
-      $('.popup.__img_preview .replace.__img').data('target-id',
-        $($(this).parents('.box_wrap')[0]).attr('id')
+$(document).ready(function() {
+  $(document).on("click", ".admin_orders .boxes_initial .box_img_btn" , function() {
+    if ($(this).hasClass('__added')) {
+      $('.popup.__img_preview .preview').attr('src',
+        $($(this).children('.preview')).attr('src')
       );
-      $('.popup.__img_preview .replace.__img').data('target-step',
-        $(this).data('step')
-      );
+      $('.popup.__img_preview .replace').removeClass('__shown');
+      if (check_scan_lock(this)) {
+        $('.popup.__img_preview .replace.__img').addClass('__shown');
+        $('.popup.__img_preview .replace.__img').data('target-id',
+          $($(this).parents('.box_wrap')[0]).attr('id')
+        );
+        $('.popup.__img_preview .replace.__img').data('target-step',
+          $(this).data('step')
+        );
+      }
+      $('.popup.__img_preview').addClass('__shown');
+    } else {
+      $(this).siblings('.box_img_input[data-step=' + $(this).data('step') + ']').click();
     }
-    $('.popup.__img_preview').addClass('__shown');
-  } else {
-    $(this).siblings('.box_img_input[data-step=' + $(this).data('step') + ']').click();
-  }
-})
+  })
 
-$('.admin_orders .boxes_initial .box_img_input').on('change', function(e) {
-  let file = this.files[0];
-  let that = this;
-  if (file) {
-    let reader = new FileReader();
-    reader.onload = function(event){
-      let step = $(that).data('step');
-      $($(that).siblings(`.box_img_btn[data-step=${step}]`).children('.preview.__img')[0]).attr('src', event.target.result);
-      $('.popup.__img_preview .preview').attr('src', event.target.result);
-      $(that).siblings(`.box_img_btn[data-step=${step}]`).addClass('__added').trigger('boxBtnUpdate');
-      $(that).siblings(`.box_img_btn[data-step=${step}]`).children('.box_status').text(
-        $(that).siblings(`.box_img_btn[data-step=${step}]`).data('success-text')
-      );
+  // $('.admin_orders .boxes_initial .box_img_input').on('change', function(e) {
+  $(document).on("change", ".admin_orders .boxes_initial .box_img_input" , function() {
+    let file = this.files[0];
+    let that = this;
+    if (file) {
+      let reader = new FileReader();
+      reader.onload = function(event){
+        let step = $(that).data('step');
+        $($(that).siblings(`.box_img_btn[data-step=${step}]`).children('.preview.__img')[0]).attr('src', event.target.result);
+        $('.popup.__img_preview .preview').attr('src', event.target.result);
+        $(that).siblings(`.box_img_btn[data-step=${step}]`).addClass('__added').trigger('boxBtnUpdate');
+        $(that).siblings(`.box_img_btn[data-step=${step}]`).children('.box_status.__img').addClass('__hidden');
+        $(that).siblings(`.box_img_btn[data-step=${step}]`).children('.box_status.__img.__success').removeClass('__hidden');
+      }
+      reader.readAsDataURL(file);
     }
-    reader.readAsDataURL(file);
-  }
-})
+  })
 
-$('.popup.__img_preview .float_buttons .close').click(function() {
-  $('.popup.__img_preview').removeClass('__shown');
-})
+  $(document).on("click", ".popup.__img_preview .float_buttons .close" , function() {
+    $('.popup.__img_preview').removeClass('__shown');
+  })
 
-$('.popup .float_buttons .replace.__img').click(function() {
-  let step = $(this).data('target-step')
-  $('#' + $(this).data('target-id')).children(`.box_img_input[data-step=${step}]`).click();
+  $(document).on("click", ".popup .float_buttons .replace.__img" , function() {
+    let step = $(this).data('target-step');
+    console.log(step);
+    console.log($(this).data('target-id'));
+    $('#' + $(this).data('target-id')).find(`.box_img_input[data-step=${step}]`).click();
+  })
 })
 
 // TODO(vf) make this check the current box only
@@ -137,10 +141,10 @@ function submit_code() {
     console.log(code);
     let id = $('.popup.__code').data("target-id");
     let step = $('.popup.__code').data("target-step");
-    let text = $('.popup.__code').data("success-text");
     $(`#${id} .box_scan_btn[data-step="${step}"]`).addClass('__added');
     $(`#${id} .box_img_btn[data-step="${step}"]`).attr('disabled', false);
-    $(`#${id} .box_scan_btn[data-step="${step}"] .box_status`).text(text);
+    $(`#${id} .box_scan_btn[data-step="${target_step}"] .box_status.__qr`).addClass('__hidden');
+    $(`#${id} .box_scan_btn[data-step="${target_step}"] .box_status.__qr.__success`).removeClass('__hidden');
     $(`#${id} .box_scan_btn[data-step="${step}"] .preview`).attr('src', "./img/qr_placeholder.png");
     $('.popup.__code').removeClass('__shown');
   }
@@ -189,19 +193,24 @@ function init_box_add() {
     $(this).siblings('.accept_btn').removeClass('__hidden');
     let $wrapper = $(this).parents('.hidden_block').children('.boxes_initial')
     // console.log($wrapper[0]);
-    add_box($wrapper);
+    // TODO(vf) add condition for allow_delete
+    add_box($wrapper, false);
   })
 }
 
-// [0] - initial text, [1] - success text, [2] - show box number bool
-function get_step1_text(type) {
-  switch (key) {
+function configure_step1(type) {
+  switch (type) {
     case "courier_receive":
-      return [
-        `Добавьте штрих-код коробки <span class="box_number">0</span>`,
-        `Штрих-код добавлен`,
-        false
-      ]
+      return {
+        scan: {
+          initial: `Добавьте штрих-код коробки <span class="box_number">0</span>`,
+          success: `Штрих-код добавлен`,
+        },
+        img: {
+          initial: `Добавьте фото коробки <span class="box_number">0</span>`,
+          success: `Фото добавлено`,
+        }
+      }
       break;
   
     default:
@@ -210,38 +219,35 @@ function get_step1_text(type) {
   }
 }
 
-// TODO(vf) add toggle for data-show-number in code_scanner
-function add_box($wrapper) {
+function add_box($wrapper, allow_delete) {
   let id = $wrapper.data('order-num');
   let box_id = parseInt($wrapper.data('id-origin')) + 1;
-  // [0] - initial text, [1] - success text, [2] - show box number bool
-  let button_text = get_step1_text($wrapper.data('type'));
+  let step_config = configure_step1($wrapper.parents('.order_box').data('type'));
+  let hide_delete = "";
+  if (!allow_delete) {
+    hide_delete = "__hidden";
+  }
   $wrapper.data('id-origin', box_id);
   $wrapper.append(`
     <div class="box_wrap" id="box${id}_${box_id}">
       <div class="box_top">
         <p class="text bold_info box_topper __shown">Коробка <span class="box_number">0</span></p>
-        <button class="transparent_btn box_btn delete_box">Удалить</button>
+        <button class="transparent_btn box_btn delete_box ${hide_delete}">Удалить</button>
         <p class="text box_status_final"><b class="bold_info">Статус: </b><span class="status_text">Принят у клиента</status></p>
       </div>
       <div class="box_inner_wrap">
-        <button class="transparent_btn box_btn box_scan_btn text" data-step="1" data-success-text="Штрих-код добавлен" data-show-number="0" data-scan-type="qrcode">
-          <span>
-            <span class="box_status __qr">Добавьте штрих-код коробки <span class="box_number">0</span></span>
-            <span class="box_number_wrap"> <span class="box_number">0</span> добавлен</span>
-          </span>
+        <button class="transparent_btn box_btn box_scan_btn text" data-step="1" data-scan-type="qrcode">
+          <span class="box_status __qr">${step_config.scan.initial}</span>
+          <span class="box_status __qr __success __hidden">${step_config.scan.success}</span>
           <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
         </button>
         <input type="file" class="box_img_input" accept="image/*" capture data-step="1">
-        <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off" data-step="1" data-success-text="Фото добавлено" data-show-number="0">
-          <span>
-            <span class="box_status __img">Добавьте фото коробки <span class="box_number">0</span></span>
-            <span class="box_number_wrap"> <span class="box_number">0</span> добавлено</span>
-          </span>
-          <span class="box_status __img">Добавьте фото коробки <span class="box_number">0</span></span>
+        <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off" data-step="1">
+          <span class="box_status __img">${step_config.img.initial}</span>
+          <span class="box_status __img __success __hidden">${step_config.img.success}</span>
           <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">
         </button>
-        <p class="text box_status_final __hidden"><b class="bold_info">Статус: </b>Принят у клиента</p>
+        <p class="text box_status_final"><b class="bold_info">Статус: </b><span class="status_text">Принят у клиента</span></p>
       </div>
     </div>
   `)
