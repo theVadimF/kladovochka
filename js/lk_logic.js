@@ -154,7 +154,22 @@ $(document).ready(function() {
             break;
         }
         break;
-    
+      case "terminal_receive":
+        switch (state) {
+          case "initial":
+            $order_box.data('state', 'in_terminal');
+            $order_box.find('.delete_box').addClass('__hidden');
+            $order_box.find('.box_inner_wrap .box_status_final').addClass('__shown');
+            $order_box.find('.status_text').text('Принят у клиента');
+            $(this).siblings('.add_box').addClass('__hidden');
+            $(this).parent().addClass('__hidden');
+            break;
+          default:
+            console.error("Unknown state " + state);
+            break;
+        }
+
+        break;
       default:
         console.error('Unknown type ' + type);
         break;
@@ -266,8 +281,20 @@ function configure_step1(type) {
         }
       }
       break;
+    case "terminal_receive":
+      return {
+        scan: {
+          initial: `Добавьте штрих-код коробки <span class="box_number">0</span>`,
+          success: `Штрих-код добавлен`,
+        },
+        img: {
+          initial: `Добавьте фото коробки <span class="box_number">0</span>`,
+          success: `Фото добавлено`,
+        }
+      }
+      break;
     default:
-      console.log("Unknown type " + type);
+      console.error("Unknown type " + type);
       break;
   }
 }
@@ -287,7 +314,7 @@ function configure_step2(type) {
       }
       break;
     default:
-      console.log("Unknown type " + type);
+      console.error("Unknown type " + type);
       break;
   }
 }
@@ -310,7 +337,7 @@ function add_box($wrapper, allow_delete) {
         <p class="text box_status_final"><b class="bold_info">Статус: </b><span class="status_text">Принят у клиента</status></p>
       </div>
       <div class="box_inner_wrap">
-        <button class="transparent_btn box_btn box_scan_btn text" data-step="1" data-scan-type="qrcode">
+        <button class="transparent_btn box_btn box_scan_btn text" data-step="1" data-scan-type="barcode">
           <span class="box_status __qr">${step_config.scan.initial}</span>
           <span class="box_status __qr __success __hidden">${step_config.scan.success}</span>
           <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">

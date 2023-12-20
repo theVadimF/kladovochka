@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./js/lib/swiper/swiper-bundle.min.css">
+</head>
+<body>
+  <div class="mobile_menu_wrap" style="display: none;">
+    <div class="mask"></div>
+    <div class="mobile_menu">
+      <div class="topper">
+        <a href="" class="logo __white">КЛАДОВОЧКА</a>
+      </div>
+      <div class="contents">
+        <div class="main_links">
+          <a href="" class="link">
+            <img src="./img/ico/package.png" alt="" class="icon">
+            <span>Сдать вещи</span>
+          </a>
+          <a href="" class="link">
+            <img src="./img/ico/package_open.png" alt="" class="icon">
+            <span>Вернуть вещи</span>
+          </a>
+        </div>
+        <div class="bottom">
+          <a href="tel:+70002223344" class="phone">+7 000 222 33 44</a>
+          <div class="messangers">
+            <a href="" class="msg">
+              <img src="./img/ico/whatsapp.png" alt="" class="msg_icon">
+            </a>
+            <a href="" class="msg">
+              <img src="./img/ico/telegram.png" alt="" class="msg_icon">
+            </a>
+          </div>
+          <button class="transparent_btn exit">Выйти</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <header>
+    <div class="header-wrap">
+      <div class="left">
+        <button class="transparent_btn open_mobile_menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="35" height="20" viewBox="0 0 35 20" fill="none">
+            <rect width="35" height="4" rx="2" fill="#CEA075"/>
+            <rect y="16" width="35" height="4" rx="2" fill="#CEA075"/>
+            <rect y="8" width="35" height="4" rx="2" fill="#CEA075"/>
+          </svg>
+        </button>
+        <a href="" class="logo">КЛАДОВОЧКА</a>
+      </div>
+      <div class="right">
+        <a href="tel:+70002223344" class="phone">+7 000 222 33 44</a>
+        <div class="messangers">
+          <a href="" class="msg">
+            <img src="./img/ico/whatsapp.png" alt="" class="msg_icon">
+          </a>
+          <a href="" class="msg">
+            <img src="./img/ico/telegram.png" alt="" class="msg_icon">
+          </a>
+        </div>
+        <button class="transparent_btn exit">Выйти</button>
+      </div>
+    </div>
+  </header>
+    <!-- needed for qrcode generation -->
+    <div class="qrcode" id="qrcode" style="display: none;"></div>
+    <div class="popup __scanner" data-target-id="">
+      <div class="scanner">
+        <div class="controls">
+          <p class="text">Камера</p>
+          <label for="cameras" class="select_wrap">
+            <select class="select" name="cameras" id="cameras"></select>
+            <svg class="expand_icon" xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
+              <path d="M5 8L0.669872 0.5L9.33013 0.5L5 8Z" fill="#CEA075"></path>
+            </svg>
+          </label>
+          <button class="close transparent_btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6.225 4.811a1 1 0 0 0-1.414 1.414L10.586 12L4.81 17.775a1 1 0 1 0 1.414 1.414L12 13.414l5.775 5.775a1 1 0 0 0 1.414-1.414L13.414 12l5.775-5.775a1 1 0 0 0-1.414-1.414L12 10.586z"/></svg>
+          </button>
+        </div>
+        <div class="viewport" id="viewport">
+          <svg class="status_img __wait" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 15 15"><path fill="none" stroke="currentColor" d="M7 1.5H2m12.5 11v-8a1 1 0 0 0-1-1h-12a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1Zm-5-2a2 2 0 1 1 0-4a2 2 0 0 1 0 4Z"/></svg>
+          <svg class="status_img __error" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" d="M8.6 1c1.6.1 3.1.9 4.2 2c1.3 1.4 2 3.1 2 5.1c0 1.6-.6 3.1-1.6 4.4c-1 1.2-2.4 2.1-4 2.4c-1.6.3-3.2.1-4.6-.7c-1.4-.8-2.5-2-3.1-3.5C.9 9.2.8 7.5 1.3 6c.5-1.6 1.4-2.9 2.8-3.8C5.4 1.3 7 .9 8.6 1zm.5 12.9c1.3-.3 2.5-1 3.4-2.1c.8-1.1 1.3-2.4 1.2-3.8c0-1.6-.6-3.2-1.7-4.3c-1-1-2.2-1.6-3.6-1.7c-1.3-.1-2.7.2-3.8 1c-1.1.8-1.9 1.9-2.3 3.3c-.4 1.3-.4 2.7.2 4c.6 1.3 1.5 2.3 2.7 3c1.2.7 2.6.9 3.9.6zM7.9 7.5L10.3 5l.7.7l-2.4 2.5l2.4 2.5l-.7.7l-2.4-2.5l-2.4 2.5l-.7-.7l2.4-2.5l-2.4-2.5l.7-.7l2.4 2.5z" clip-rule="evenodd"/></svg>
+          <p class="status_text">Ожидание камеры...</p>
+        </div>
+      </div>
+    </div>
+    <div class="popup __block __img_preview">
+      <div class="admin-wrap __relative">
+        <div class="float_buttons">
+          <button class="beige_btn replace __img" data-target-id="">Заменить фото</button>
+          <button class="beige_btn replace __qr" data-target-id="">Заменить штрих-код</button>
+          <button class="close transparent_btn">
+            <img src="./img/ico/close_btn.png" alt="" class="icon">
+          </button>
+        </div>
+        <div class="preview_wrap">
+          <img src="./img/ico/img_placeholder.png" alt="" class="preview">
+        </div>
+      </div>
+    </div>
+  <div class="lk_top admin-wrap __no_padding">
+    <p class="bold_heading">Работа с заявками</p>
+    <div class="long_nav">
+      <button class="nav_btn __active">Входящие заявки</button>
+      <button class="nav_btn">Отработанные заявки</button>
+    </div>
+  </div>
+  <div class="admin-wrap">
+    <div class="top_bar">
+      <div class="orders_fitlers">
+        <div class="dropdown_wrap __update_text __hide_selected">
+          <button class="open_dropdown dropdown_btn">
+            <span class="current_option">На сдачу</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
+              <path d="M5 8L0.669872 0.5L9.33013 0.5L5 8Z" fill="#CEA075"/>
+            </svg>
+          </button>
+          <div class="contents_outer">
+            <div class="contents">
+              <button class="option dropdown_btn __selected" data-value="На сдачу">На сдачу</button>
+              <button class="option dropdown_btn" data-value="На возврат">На возврат</button>
+            </div>
+          </div>
+        </div>
+        <div class="dropdown_wrap __update_text __hide_selected">
+          <button class="open_dropdown dropdown_btn">
+            <span class="current_option">За сегодня</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
+              <path d="M5 8L0.669872 0.5L9.33013 0.5L5 8Z" fill="#CEA075"/>
+            </svg>
+          </button>
+          <div class="contents_outer">
+            <div class="contents">
+              <button class="option dropdown_btn __selected" data-value="За сегодня">За сегодня</button>
+              <button class="option dropdown_btn" data-value="За неделю">За неделю</button>
+              <button class="option dropdown_btn" data-value="За месяц">За месяц</button>
+            </div>
+          </div>
+        </div>
+        <div class="dropdown_wrap">
+          <button class="open_dropdown dropdown_btn">
+            <span class="current_option">Сортировать</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
+              <path d="M5 8L0.669872 0.5L9.33013 0.5L5 8Z" fill="#CEA075"/>
+            </svg>
+          </button>
+          <div class="contents_outer">
+            <div class="contents">
+              <button class="option dropdown_btn __selected" data-value="Сначала новые">Сначала новые</button>
+              <button class="option dropdown_btn" data-value="Сначала старые">Сначала старые</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <input type="text" class="admin_search" placeholder="Поиск...">
+    </div>
+    <div class="admin_orders">
+      <div class="topper grid">
+        <p class="text">№</p>
+        <p class="text">Дата</p>
+        <p class="text hide_mobile">ФИО</p>
+        <p class="text">Тип заявки</p>
+      </div>
+      <div class="orders">
+        <div class="order_box" data-order-num="001" data-type="terminal_receive" data-state="initial">
+          <p class="text bold_info status">Статус: взят в работу</p>
+          <div class="order_grid grid">
+            <p class="text"><b class="bold_info">Номер: </b>001</p>
+            <p class="text __date"><b class="bold_info">Дата: </b>20.09.23</p>
+            <p class="text hide_mobile __name"><b class="bold_info">ФИО: </b>Иванов И.И.</p>
+            <p class="text __type"><b class="bold_info">Тип: </b>В терминале</p>
+            <p class="text __details __address"><b class="bold_info">Адрес: </b>Ленина, 1</p>
+            <p class="text __details __comment"><b class="bold_info">Комментарий: </b>позвоните за 30 минут</p>
+            <p class="text __details __properties"><b class="bold_info">Свойства: </b>хрупкое</p>
+          </div>
+          <div class="hidden_block">
+            <div class="bottom">
+              <p class="text __details"><b class="bold_info">Вещи в заявке: </b>коробка 1 (1,2 кг, 50х50х80), коробка 2 (2 кг, 40х30х50)</p>
+              <button class="beige_btn dialog_btn accept_initial">Взять в работу</button>
+            </div>
+          </div>
+          <button class="transparent_btn toggle_order">
+            <svg class="expand_icon" xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
+              <path d="M5 8L0.669872 0.5L9.33013 0.5L5 8Z" fill="#CEA075"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="./js/lib/jquery-3.7.1.min.js"></script>
+<script src="./js/lib/html5-qrcode.min.js"></script>
+<script src="./js/qrcode.min.js"></script>
+<script src="./js/script.js"></script>
+<script src="./js/code_scanner.js"></script>
+<script src="./js/lk_logic.js"></script>
+</html>
