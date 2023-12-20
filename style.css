@@ -1633,6 +1633,14 @@ a.beige_btn {
   display: none;
 }
 
+.admin_orders .box_wrap .box_top .delete_box {
+  font-size: 14px;
+  font-weight: 600;
+  color: #CEA075;
+  text-align: left;
+  cursor: pointer;
+}
+
 @media (max-width: 980px) {
   .user_home_top {
     display: flex;

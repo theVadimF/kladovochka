@@ -61,7 +61,6 @@ $(document).ready(function() {
     }
   })
 
-  // $('.admin_orders .boxes_initial .box_img_input').on('change', function(e) {
   $(document).on("change", ".admin_orders .boxes_initial .box_img_input" , function() {
     let file = this.files[0];
     let that = this;
@@ -71,7 +70,8 @@ $(document).ready(function() {
         let step = $(that).data('step');
         $($(that).siblings(`.box_img_btn[data-step=${step}]`).children('.preview.__img')[0]).attr('src', event.target.result);
         $('.popup.__img_preview .preview').attr('src', event.target.result);
-        $(that).siblings(`.box_img_btn[data-step=${step}]`).addClass('__added').trigger('boxBtnUpdate');
+        $(that).siblings(`.box_img_btn[data-step=${step}]`).addClass('__added');
+        $(that).parents('.boxes_initial').trigger('boxBtnUpdate');
         $(that).siblings(`.box_img_btn[data-step=${step}]`).children('.box_status.__img').addClass('__hidden');
         $(that).siblings(`.box_img_btn[data-step=${step}]`).children('.box_status.__img.__success').removeClass('__hidden');
       }
@@ -89,21 +89,29 @@ $(document).ready(function() {
     console.log($(this).data('target-id'));
     $('#' + $(this).data('target-id')).find(`.box_img_input[data-step=${step}]`).click();
   })
-})
 
-// TODO(vf) make this check the current box only
-// TODO(vf) move fix to code_scanner
-$('.admin_orders .boxes_initial .box_btn').on('boxBtnUpdate', function() {
-  let flag = true;
-  $('.admin_orders .boxes_initial .box_btn').each(function() {
-    if (!$(this).hasClass('__added')) {
+  $(document).on("boxBtnUpdate", ".admin_orders .boxes_initial", function() {
+    let flag = true;
+    $btns = $(this).find('.box_btn')
+    if ($btns.length > 0) {
+      $btns.each(function() {
+        if (!$(this).hasClass('__added')) {
+          flag = false;
+          return false;  // Break out of each loop
+        }
+      })
+    } else {
       flag = false;
-      return false;  // Break out of each loop
     }
+    $(this).siblings('.bottom_btns').children('.accept_btn').attr('disabled', !flag);
   })
-  if (flag) {
-    $('.admin_orders .order_box .bottom_btns .accept_btn').attr('disabled', false);
-  }
+
+  $(document).on("click", ".admin_orders .boxes_initial .delete_box" , function() {
+    let $box_wrap = $(this).parents('.box_wrap');
+    let $wrapper = $(this).parents('.boxes_initial');
+    $box_wrap.remove();
+    set_box_numbers($wrapper);
+  })
 })
 
 $('.admin_orders .boxes_initial .box_wrap.__storage .box_top').click(function() {
@@ -192,9 +200,8 @@ function init_box_add() {
     $(this).text("Добавить еще коробку");
     $(this).siblings('.accept_btn').removeClass('__hidden');
     let $wrapper = $(this).parents('.hidden_block').children('.boxes_initial')
-    // console.log($wrapper[0]);
     // TODO(vf) add condition for allow_delete
-    add_box($wrapper, false);
+    add_box($wrapper, true);
   })
 }
 
@@ -232,7 +239,7 @@ function add_box($wrapper, allow_delete) {
     <div class="box_wrap" id="box${id}_${box_id}">
       <div class="box_top">
         <p class="text bold_info box_topper __shown">Коробка <span class="box_number">0</span></p>
-        <button class="transparent_btn box_btn delete_box ${hide_delete}">Удалить</button>
+        <button class="transparent_btn delete_box ${hide_delete}">Удалить</button>
         <p class="text box_status_final"><b class="bold_info">Статус: </b><span class="status_text">Принят у клиента</status></p>
       </div>
       <div class="box_inner_wrap">
@@ -252,20 +259,11 @@ function add_box($wrapper, allow_delete) {
     </div>
   `)
   set_box_numbers($wrapper);
-  init_delete_box();
 }
 
 function set_box_numbers($wrapper) {
+  $wrapper.trigger('boxBtnUpdate');
   $wrapper.children('.box_wrap').each(function(index) {
     $(this).find('.box_number').text(index + 1);
-  })
-}
-
-function init_delete_box() {
-  $('.admin_orders .boxes_initial .delete_box').click(function() {
-    let $box_wrap = $(this).parents('.box_wrap');
-    let $wrapper = $(this).parents('.boxes_initial');
-    $box_wrap.remove();
-    set_box_numbers($wrapper);
   })
 }

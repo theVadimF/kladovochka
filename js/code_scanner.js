@@ -12,7 +12,8 @@ const updateBtn = (data, id) => {
   $(`#${id} .box_scan_btn[data-step="${target_step}"] .preview.__qr`).attr('src', base64);
   $(`#${id} .box_scan_btn[data-step="${target_step}"] .box_status.__qr`).addClass('__hidden');
   $(`#${id} .box_scan_btn[data-step="${target_step}"] .box_status.__qr.__success`).removeClass('__hidden');
-  $(`#${id} .box_scan_btn[data-step=${target_step}]`).addClass("__added").trigger('boxBtnUpdate');
+  $(`#${id} .box_scan_btn[data-step=${target_step}]`).addClass("__added");
+  $(`#${id}`).parents('.boxes_initial').trigger('boxBtnUpdate');
   $(`#${id} .box_img_btn[data-step=${target_step}]`).prop("disabled", false);
   $(`#${id} .box_topper`).addClass('__shown');
 
