@@ -112,15 +112,63 @@ $(document).ready(function() {
     $box_wrap.remove();
     set_box_numbers($wrapper);
   })
+
+  $(document).on("click", ".admin_orders .boxes_initial .box_wrap.__storage .box_top" , function() {
+    $(this).parents('.box_wrap').toggleClass('__closed');
+  })
+
+  $(document).on("click", ".admin_orders .boxes_initial .box_wrap.__storage .toggle_box" , function() {
+    $(this).parents('.box_wrap').toggleClass('__closed');
+  })
+
+  $(document).on("click", ".admin_orders .order_box .bottom_btns .accept_btn", function() {
+    let $order_box = $(this).parents('.order_box');
+    let type = $order_box.data('type');
+    let state = $order_box.data('state');
+    switch (type) {
+      case 'courier_receive':
+        switch (state) {
+          case 'initial':
+            $order_box.data('state', 'accepted');
+            $order_box.find('.delete_box').addClass('__hidden');
+            $order_box.find('.box_inner_wrap .box_status_final').addClass('__shown');
+            $order_box.find('.status_text').text('Принят у клиента');
+            $(this).text('Поставить на хранение');
+            $(this).siblings('.add_box').addClass('__hidden');
+            break;
+          case 'accepted':
+            $order_box.data('state', 'deposit_storage');
+            $(this).text('На хранении');
+            $order_box.find('.box_inner_wrap .box_status_final').removeClass('__shown');
+            $order_box.find('.box_top .box_status_final').addClass('__shown');
+            $(this).attr('disabled', true);
+            box_storage($order_box.find(".boxes_initial"));
+            break;
+          case 'deposit_storage':
+            $order_box.data('state', 'in_storage');
+            $order_box.find('.status_text').text('Поставлен на хранение');
+            $(this).parent().addClass('__hidden');
+            break;
+          default:
+            console.error("Unknown state " + state);
+            break;
+        }
+        break;
+    
+      default:
+        console.error('Unknown type ' + type);
+        break;
+    }
+  })
 })
 
-$('.admin_orders .boxes_initial .box_wrap.__storage .box_top').click(function() {
-  $(this).parent('.box_wrap').toggleClass('__closed');
-})
+// $('.admin_orders .boxes_initial .box_wrap.__storage .box_top').click(function() {
+//   $(this).parent('.box_wrap').toggleClass('__closed');
+// })
 
-$('.admin_orders .boxes_initial .box_wrap.__storage .toggle_box').click(function() {
-  $(this).parent('.box_wrap').toggleClass('__closed');
-})
+// $('.admin_orders .boxes_initial .box_wrap.__storage .toggle_box').click(function() {
+//   $(this).parent('.box_wrap').toggleClass('__closed');
+// })
 
 let $inputs = $('.popup .code_wrap .digit_wrap .digit').on('input', function(e) {
   this.value = this.value.replace(/^0-9/g,'');
@@ -182,7 +230,6 @@ $('.admin_orders .order_box .bottom .accept_initial').click(function() {
   $(this).addClass('__hidden');
   let $hidden_block = $(this).parents('.hidden_block');
   let id = $(this).parents('.order_box').data('order-num');
-  console.log(id);
   $hidden_block.append(`
     <div class="boxes_initial" data-lock="0" data-order-num="${id}" data-id-origin="0">
     </div>
@@ -219,12 +266,32 @@ function configure_step1(type) {
         }
       }
       break;
-  
     default:
-      console.log("Unknown type")
+      console.log("Unknown type " + type);
       break;
   }
 }
+
+function configure_step2(type) {
+  switch (type) {
+    case "courier_receive":
+      return {
+        scan: {
+          initial: `Отсканируйте место <span class="box_number">0</span>`,
+          success: `Скан места добавлен`,
+        },
+        img: {
+          initial: `Добавьте фото хранения <span class="box_number">0</span>`,
+          success: `Фото хранения добавлено`,
+        }
+      }
+      break;
+    default:
+      console.log("Unknown type " + type);
+      break;
+  }
+}
+
 
 function add_box($wrapper, allow_delete) {
   let id = $wrapper.data('order-num');
@@ -258,6 +325,33 @@ function add_box($wrapper, allow_delete) {
       </div>
     </div>
   `)
+  set_box_numbers($wrapper);
+}
+
+function box_storage($wrapper) {
+  let step_config = configure_step2($wrapper.parents('.order_box').data('type'));
+  $wrapper.data('lock', 1);
+  $wrapper.children('.box_wrap').each(function() {
+    $(this).addClass('__storage');
+    $(this).find('.box_inner_wrap').append(`
+      <button class="transparent_btn box_btn box_scan_btn text" data-step="2" data-scan-type="qrcode">
+        <span class="box_status __qr">${step_config.scan.initial}</span>
+        <span class="box_status __qr __success __hidden">${step_config.scan.success}</span>
+        <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
+      </button>
+      <input type="file" class="box_img_input" accept="image/*" capture data-step="2">
+      <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off" data-step="2">
+        <span class="box_status __img">${step_config.img.initial}</span>
+        <span class="box_status __img __success __hidden">${step_config.img.success}</span>
+        <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">
+      </button>
+      <button class="transparent_btn toggle_box">
+        <svg class="expand_icon" xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
+          <path d="M5 8L0.669872 0.5L9.33013 0.5L5 8Z" fill="#CEA075"></path>
+        </svg>
+      </button>
+    `)
+  })
   set_box_numbers($wrapper);
 }
 

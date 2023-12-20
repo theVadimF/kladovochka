@@ -1641,6 +1641,10 @@ a.beige_btn {
   cursor: pointer;
 }
 
+.admin_orders .box_wrap .box_top .delete_box.__hidden {
+  display: none;
+}
+
 @media (max-width: 980px) {
   .user_home_top {
     display: flex;
