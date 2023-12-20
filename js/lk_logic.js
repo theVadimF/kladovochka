@@ -142,7 +142,7 @@ $(document).ready(function() {
             $order_box.find('.box_inner_wrap .box_status_final').removeClass('__shown');
             $order_box.find('.box_top .box_status_final').addClass('__shown');
             $(this).attr('disabled', true);
-            box_storage($order_box.find(".boxes_initial"));
+            box_storage($order_box.find(".boxes_initial"), 2);
             break;
           case 'deposit_storage':
             $order_box.data('state', 'in_storage');
@@ -168,7 +168,33 @@ $(document).ready(function() {
             console.error("Unknown state " + state);
             break;
         }
-
+        break;
+      case 'terminal_courier':
+        switch (state) {
+          case 'initial':
+            $order_box.data('state', 'deposit_storage');
+            $(this).text('Отправить на склад');
+            $(this).attr('disabled', true);
+            $order_box.find('.box_inner_wrap .box_status_final').removeClass('__shown');
+            $order_box.find('.box_top .box_status_final').addClass('__shown');
+            box_storage($order_box.find(".boxes_initial"), 2);
+            $order_box.find('.status_text').text('Передан курьеру');
+            break;
+          case 'deposit_storage':
+            $order_box.data('state', 'to_storage');
+            $(this).text('На хранении');
+            $(this).attr('disabled', true);
+            box_storage($order_box.find(".boxes_initial"), 3);
+            break;
+          case 'to_storage':
+            $order_box.data('state', 'in_storage');
+            $order_box.find('.status_text').text('Поставлен на хранение');
+            $(this).parent().addClass('__hidden');
+            break;
+          default:
+            console.error("Unknown state " + state);
+            break;
+        }
         break;
       default:
         console.error('Unknown type ' + type);
@@ -274,6 +300,7 @@ function configure_step1(type) {
         scan: {
           initial: `Добавьте штрих-код коробки <span class="box_number">0</span>`,
           success: `Штрих-код добавлен`,
+          type: "barcode"
         },
         img: {
           initial: `Добавьте фото коробки <span class="box_number">0</span>`,
@@ -286,6 +313,7 @@ function configure_step1(type) {
         scan: {
           initial: `Добавьте штрих-код коробки <span class="box_number">0</span>`,
           success: `Штрих-код добавлен`,
+          type: "barcode"
         },
         img: {
           initial: `Добавьте фото коробки <span class="box_number">0</span>`,
@@ -306,10 +334,24 @@ function configure_step2(type) {
         scan: {
           initial: `Отсканируйте место <span class="box_number">0</span>`,
           success: `Скан места добавлен`,
+          type: "qrcode"
         },
         img: {
           initial: `Добавьте фото хранения <span class="box_number">0</span>`,
           success: `Фото хранения добавлено`,
+        }
+      }
+      break;
+    case "terminal_courier":
+      return {
+        scan: {
+          initial: `Добавьте скан коробки <span class="box_number">0</span>`,
+          success: `Скан коробки <span class="box_number">0</span> добавлен`,
+          type: "barcode"
+        },
+        img: {
+          initial: `Фото принятия из терминала <span class="box_number">0</span>`,
+          success: `Фото принятия <span class="box_number">0</span> добавлено`,
         }
       }
       break;
@@ -319,6 +361,26 @@ function configure_step2(type) {
   }
 }
 
+function configure_step3(type) {
+  switch (type) {
+    case "terminal_courier":
+      return {
+        scan: {
+          initial: `Добавьте скан места <span class="box_number">0</span>`,
+          success: `Скан места <span class="box_number">0</span> добавлен`,
+          type: "qrcode"
+        },
+        img: {
+          initial: `Добавьте фото хранения <span class="box_number">0</span>`,
+          success: `Фото хранения <span class="box_number">0</span> добавлено`,
+        }
+      }
+      break;
+    default:
+      console.error("Unknown type " + type);
+      break;
+  }
+}
 
 function add_box($wrapper, allow_delete) {
   let id = $wrapper.data('order-num');
@@ -337,7 +399,7 @@ function add_box($wrapper, allow_delete) {
         <p class="text box_status_final"><b class="bold_info">Статус: </b><span class="status_text">Принят у клиента</status></p>
       </div>
       <div class="box_inner_wrap">
-        <button class="transparent_btn box_btn box_scan_btn text" data-step="1" data-scan-type="barcode">
+        <button class="transparent_btn box_btn box_scan_btn text" data-step="1" data-scan-type="${step_config.scan.type}">
           <span class="box_status __qr">${step_config.scan.initial}</span>
           <span class="box_status __qr __success __hidden">${step_config.scan.success}</span>
           <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
@@ -355,19 +417,30 @@ function add_box($wrapper, allow_delete) {
   set_box_numbers($wrapper);
 }
 
-function box_storage($wrapper) {
-  let step_config = configure_step2($wrapper.parents('.order_box').data('type'));
+function box_storage($wrapper, step) {
+  let step_config;
+  switch (step) {
+    case 2:
+      step_config = configure_step2($wrapper.parents('.order_box').data('type'));
+      break;
+    case 3:
+      step_config = configure_step3($wrapper.parents('.order_box').data('type'));
+      break;
+    default:
+      console.log("Unknown step: " + step); 
+      break;
+  }
   $wrapper.data('lock', 1);
   $wrapper.children('.box_wrap').each(function() {
     $(this).addClass('__storage');
     $(this).find('.box_inner_wrap').append(`
-      <button class="transparent_btn box_btn box_scan_btn text" data-step="2" data-scan-type="qrcode">
+      <button class="transparent_btn box_btn box_scan_btn text" data-step="${step}" data-scan-type="${step_config.scan.type}">
         <span class="box_status __qr">${step_config.scan.initial}</span>
         <span class="box_status __qr __success __hidden">${step_config.scan.success}</span>
         <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
       </button>
-      <input type="file" class="box_img_input" accept="image/*" capture data-step="2">
-      <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off" data-step="2">
+      <input type="file" class="box_img_input" accept="image/*" capture data-step="${step}">
+      <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off" data-step="${step}">
         <span class="box_status __img">${step_config.img.initial}</span>
         <span class="box_status __img __success __hidden">${step_config.img.success}</span>
         <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">
