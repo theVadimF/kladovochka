@@ -121,8 +121,10 @@ $(document).ready(function() {
     $(this).parents('.box_wrap').toggleClass('__closed');
   })
 
+  // TODO(vf) Check lock on preliminary step
   $(document).on("click", ".admin_orders .order_box .bottom_btns .accept_btn", function() {
     let $order_box = $(this).parents('.order_box');
+    let $wrapper = $order_box.find('.boxes_initial');
     let type = $order_box.data('type');
     let state = $order_box.data('state');
     switch (type) {
@@ -142,7 +144,7 @@ $(document).ready(function() {
             $order_box.find('.box_inner_wrap .box_status_final').removeClass('__shown');
             $order_box.find('.box_top .box_status_final').addClass('__shown');
             $(this).attr('disabled', true);
-            box_storage($order_box.find(".boxes_initial"), 2);
+            box_storage($wrapper, 2);
             break;
           case 'deposit_storage':
             $order_box.data('state', 'in_storage');
@@ -196,20 +198,36 @@ $(document).ready(function() {
             break;
         }
         break;
+      case 'courier_return':
+        switch (state) {
+          case 'initial':
+            $order_box.data('state', 'picked_up');
+            $wrapper.data('lock', 1);
+            $order_box.find('.status_text').text('Снят с хранения');
+            $order_box.find('.box_top .box_status_final').addClass('__shown');
+            $(this).text('Выдать');
+            break;
+          case 'picked_up':
+            $order_box.data('state', 'return_to_client');
+            $(this).text('Выдан клиенту');
+            box_storage($wrapper, 2);
+            break;
+          case 'return_to_client':
+            $order_box.data('state', 'completed');
+            $order_box.find('.status_text').text('Передан клиенту');
+            $(this).parent().addClass('__hidden');
+            break;
+          default:
+            console.error("Unknown state " + state);
+            break;
+        }
+        break;
       default:
         console.error('Unknown type ' + type);
         break;
     }
   })
 })
-
-// $('.admin_orders .boxes_initial .box_wrap.__storage .box_top').click(function() {
-//   $(this).parent('.box_wrap').toggleClass('__closed');
-// })
-
-// $('.admin_orders .boxes_initial .box_wrap.__storage .toggle_box').click(function() {
-//   $(this).parent('.box_wrap').toggleClass('__closed');
-// })
 
 let $inputs = $('.popup .code_wrap .digit_wrap .digit').on('input', function(e) {
   this.value = this.value.replace(/^0-9/g,'');
@@ -240,8 +258,9 @@ function submit_code() {
     let step = $('.popup.__code').data("target-step");
     $(`#${id} .box_scan_btn[data-step="${step}"]`).addClass('__added');
     $(`#${id} .box_img_btn[data-step="${step}"]`).attr('disabled', false);
-    $(`#${id} .box_scan_btn[data-step="${target_step}"] .box_status.__qr`).addClass('__hidden');
-    $(`#${id} .box_scan_btn[data-step="${target_step}"] .box_status.__qr.__success`).removeClass('__hidden');
+    $(`#${id} .box_scan_btn[data-step="${step}"] .box_status.__qr`).addClass('__hidden');
+    $(`#${id} .box_scan_btn[data-step="${step}"] .box_status.__qr.__success`).removeClass('__hidden');
+    // Img placeholder for code entry
     $(`#${id} .box_scan_btn[data-step="${step}"] .preview`).attr('src', "./img/qr_placeholder.png");
     $('.popup.__code').removeClass('__shown');
   }
@@ -267,28 +286,65 @@ $('.popup.__code .close').click(function() {
   $('.popup.__code').removeClass('__shown');
 })
 
+function is_box_dynamic(type) {
+  switch (type) {
+    case 'courier_return':
+      return false;
+
+    default:
+      return true;
+  }
+}
+
+function accept_btn_text(type) {
+  switch (type) {
+    case 'courier_return':
+      return "Снят с хранения";
+  
+    default:
+      return "Принять"
+  }
+}
+
 $('.admin_orders .order_box .bottom .accept_initial').click(function() {
   $(this).addClass('__hidden');
   let $hidden_block = $(this).parents('.hidden_block');
+  let $outer_wrapper = $hidden_block.parents('.order_box');
   let id = $(this).parents('.order_box').data('order-num');
+  let type = $outer_wrapper.data('type')
+  let dynamic = is_box_dynamic(type);
+  // TODO(vf) rework this
+  let hide_add_box = "";
+  let hide_accept = "__hidden";
+  if (!dynamic) {
+    hide_add_box = "__hidden"
+    hide_accept = ""
+  }
   $hidden_block.append(`
     <div class="boxes_initial" data-lock="0" data-order-num="${id}" data-id-origin="0">
     </div>
     <div class="bottom_btns box_wrap">
-      <button class="beige_btn bottom_btn __white add_box">Добавить коробку / место</button>
-      <button class="beige_btn bottom_btn accept_btn __hidden" disabled autocomplete="off">Принять</button>
+      <button class="beige_btn bottom_btn __white add_box ${hide_add_box}">Добавить коробку / место</button>
+      <button class="beige_btn bottom_btn accept_btn ${hide_accept}" disabled autocomplete="off">${accept_btn_text(type)}</button>
     </div>
   `);
-
-  init_box_add();
+  let $wrapper = $hidden_block.find('.boxes_initial');
+  if (dynamic) {
+    init_box_add();
+  } else {
+    let box_count = parseInt($outer_wrapper.data('box-count'));
+    for (let i = 1; i <= box_count; ++i) {
+      add_box($wrapper, false);
+    }
+  }
 })
 
+// TODO(vf) Show top status
 function init_box_add() {
   $('.admin_orders .order_box .bottom_btns .add_box').click(function() {
     $(this).text("Добавить еще коробку");
     $(this).siblings('.accept_btn').removeClass('__hidden');
     let $wrapper = $(this).parents('.hidden_block').children('.boxes_initial')
-    // TODO(vf) add condition for allow_delete
     add_box($wrapper, true);
   })
 }
@@ -307,7 +363,6 @@ function configure_step1(type) {
           success: `Фото добавлено`,
         }
       }
-      break;
     case "terminal_receive":
       return {
         scan: {
@@ -320,7 +375,18 @@ function configure_step1(type) {
           success: `Фото добавлено`,
         }
       }
-      break;
+    case "courier_return":
+      return {
+        scan: {
+          initial: `Добавьте штрих-код места <span class="box_number">0</span>`,
+          success: `Штрих-код места <span class="box_number">0</span> добавлен`,
+          type: "qrcode"
+        },
+        img: {
+          initial: `Добавьте фото снятия со склада <span class="box_number">0</span>`,
+          success: `Фото снятия со склада <span class="box_number">0</span> добавлено`,
+        }
+      }
     default:
       console.error("Unknown type " + type);
       break;
@@ -341,7 +407,6 @@ function configure_step2(type) {
           success: `Фото хранения добавлено`,
         }
       }
-      break;
     case "terminal_courier":
       return {
         scan: {
@@ -354,7 +419,18 @@ function configure_step2(type) {
           success: `Фото принятия <span class="box_number">0</span> добавлено`,
         }
       }
-      break;
+    case 'courier_return':
+      return {
+        scan: {
+          initial: `Добавьте штрих-код коробки <span class="box_number">0</span>`,
+          success: `Штрих-код коробки <span class="box_number">0</span> добавлен`,
+          type: "code"
+        },
+        img: {
+          initial: `Добавьте фото выдачи коробки <span class="box_number">0</span>`,
+          success: `Фото выдачи коробки <span class="box_number">0</span> добавлено`,
+        }
+      }
     default:
       console.error("Unknown type " + type);
       break;
@@ -375,7 +451,6 @@ function configure_step3(type) {
           success: `Фото хранения <span class="box_number">0</span> добавлено`,
         }
       }
-      break;
     default:
       console.error("Unknown type " + type);
       break;
@@ -386,15 +461,18 @@ function add_box($wrapper, allow_delete) {
   let id = $wrapper.data('order-num');
   let box_id = parseInt($wrapper.data('id-origin')) + 1;
   let step_config = configure_step1($wrapper.parents('.order_box').data('type'));
+  // TODO(vf) Rework this
   let hide_delete = "";
+  let show_topper = "__shown";
   if (!allow_delete) {
+    show_topper = "";
     hide_delete = "__hidden";
   }
   $wrapper.data('id-origin', box_id);
   $wrapper.append(`
     <div class="box_wrap" id="box${id}_${box_id}">
       <div class="box_top">
-        <p class="text bold_info box_topper __shown">Коробка <span class="box_number">0</span></p>
+        <p class="text bold_info box_topper ${show_topper}">Коробка <span class="box_number">0</span></p>
         <button class="transparent_btn delete_box ${hide_delete}">Удалить</button>
         <p class="text box_status_final"><b class="bold_info">Статус: </b><span class="status_text">Принят у клиента</status></p>
       </div>
@@ -430,7 +508,7 @@ function box_storage($wrapper, step) {
       console.log("Unknown step: " + step); 
       break;
   }
-  $wrapper.data('lock', 1);
+  $wrapper.data('lock', step - 1);  // TODO(vf) Move to config
   $wrapper.children('.box_wrap').each(function() {
     $(this).addClass('__storage');
     $(this).find('.box_inner_wrap').append(`

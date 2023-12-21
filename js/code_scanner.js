@@ -16,7 +16,6 @@ const updateBtn = (data, id) => {
   $(`#${id}`).parents('.boxes_initial').trigger('boxBtnUpdate');
   $(`#${id} .box_img_btn[data-step=${target_step}]`).prop("disabled", false);
   $(`#${id} .box_topper`).addClass('__shown');
-
 }
 
 const handleResult = (data) => {
@@ -153,30 +152,28 @@ function clear_code_digits() {
 $(document).ready(function() {
   $(document).on("click", ".admin_orders .boxes_initial .box_scan_btn" , function() {
     let scan_type = $(this).data('scan-type');
-    if (scan_type === 'code') {
-      if (!$(this).hasClass('__added')) {
+    if ($(this).hasClass('__added')) {
+      $('.popup.__img_preview .preview').attr('src',
+        $($(this).children('.preview')).attr('src')
+      );
+      $('.popup.__img_preview .replace').removeClass('__shown');
+      if (check_scan_lock(this)) {
+        $('.popup.__img_preview .replace.__qr').addClass('__shown');
+        $('.popup.__img_preview .replace.__qr').data('target-id',
+          $($(this).parents('.box_wrap')[0]).attr('id')
+        );
+        $('.popup.__img_preview .replace.__qr').data('scan-type', scan_type);
+      }
+      $('.popup.__img_preview').data('target-step',
+        $(this).data('step')
+      );
+      $('.popup.__img_preview').addClass('__shown');
+    } else {
+      if (scan_type === 'code') {
         clear_code_digits();
         $('.popup.__code').data("target-id", $(this).parents('.box_wrap').attr('id'));
         $('.popup.__code').data("target-step", $(this).data('step'));
         $('.popup.__code').addClass('__shown');
-      }
-    } else {
-      if ($(this).hasClass('__added')) {
-        $('.popup.__img_preview .preview').attr('src',
-          $($(this).children('.preview')).attr('src')
-        );
-        $('.popup.__img_preview .replace').removeClass('__shown');
-        if (check_scan_lock(this)) {
-          $('.popup.__img_preview .replace.__qr').addClass('__shown');
-          $('.popup.__img_preview .replace.__qr').data('target-id',
-            $($(this).parents('.box_wrap')[0]).attr('id')
-          );
-          $('.popup.__img_preview .replace.__qr').data('scan-type', scan_type);
-        }
-        $('.popup.__img_preview').data('target-step',
-          $(this).data('step')
-        );
-        $('.popup.__img_preview').addClass('__shown');
       } else {
         $('.popup.__scanner').data("target-id", $(this).parents('.box_wrap').attr('id'));
         $('.popup.__scanner').data("target-step", $(this).data('step'));

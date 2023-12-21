@@ -1645,6 +1645,15 @@ a.beige_btn {
   display: none;
 }
 
+.admin_orders .box_inner_wrap .box_img_btn {
+  grid-column: 2/4;
+}
+
+
+.admin_orders .box_inner_wrap:has(.box_status_final.__shown) .box_img_btn {
+  grid-column: 2;
+}
+
 @media (max-width: 980px) {
   .user_home_top {
     display: flex;
