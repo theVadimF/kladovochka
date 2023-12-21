@@ -97,7 +97,7 @@ $(document).ready(function() {
       $btns.each(function() {
         if (!$(this).hasClass('__added')) {
           flag = false;
-          return false;  // Break out of each loop
+          return false;
         }
       })
     } else {
@@ -121,13 +121,14 @@ $(document).ready(function() {
     $(this).parents('.box_wrap').toggleClass('__closed');
   })
 
+  // Step configuration
   $(document).on("click", ".admin_orders .order_box .bottom_btns .accept_btn", function() {
     let $order_box = $(this).parents('.order_box');
     let $wrapper = $order_box.find('.boxes_initial');
     let type = $order_box.data('type');
     let state = $order_box.data('state');
     switch (type) {
-      case 'courier_receive':
+      case 'courier_receive':  // Сдача курьером
         switch (state) {
           case 'initial':
             $order_box.data('state', 'accepted');
@@ -159,7 +160,7 @@ $(document).ready(function() {
             break;
         }
         break;
-      case "terminal_receive":
+      case "terminal_receive":  // Сдача в терминал
         switch (state) {
           case "initial":
             $wrapper.data('lock', 1);
@@ -176,7 +177,7 @@ $(document).ready(function() {
             break;
         }
         break;
-      case 'terminal_courier':
+      case 'terminal_courier':  // Курьер (из терминала)
         switch (state) {
           case 'initial':
             $wrapper.data('lock', 1);
@@ -208,7 +209,7 @@ $(document).ready(function() {
             break;
         }
         break;
-      case 'courier_return':
+      case 'courier_return':  // Возврат курьером
         switch (state) {
           case 'initial':
             $order_box.data('state', 'picked_up');
@@ -235,7 +236,7 @@ $(document).ready(function() {
             break;
         }
         break;
-      case 'terminal_return':
+      case 'terminal_return':  // Возврат в терминал
         switch (state) {
           case 'initial':
             $order_box.data('state', 'picked_up');
@@ -250,7 +251,7 @@ $(document).ready(function() {
             break;
         }
         break;
-      case 'manager':
+      case 'manager':  // ЛК Менеджера
         switch (state) {
           case 'initial':
             $order_box.data('state', 'in_terminal');
@@ -396,6 +397,7 @@ function init_box_add() {
   })
 }
 
+// Step 1 button labels and scan type
 function configure_step1(type) {
   switch (type) {
     case "courier_receive":
@@ -452,6 +454,7 @@ function configure_step1(type) {
   }
 }
 
+// Step 2 button labels and scan type
 function configure_step2(type) {
   switch (type) {
     case "courier_receive":
@@ -508,6 +511,7 @@ function configure_step2(type) {
   }
 }
 
+// Step 3 button labels and scan type
 function configure_step3(type) {
   switch (type) {
     case "terminal_courier":
@@ -540,6 +544,7 @@ function configure_step3(type) {
   }
 }
 
+// Step 1
 function add_box($wrapper, allow_delete) {
   let id = $wrapper.data('order-num');
   let box_id = parseInt($wrapper.data('id-origin')) + 1;
@@ -576,6 +581,7 @@ function add_box($wrapper, allow_delete) {
   set_box_numbers($wrapper);
 }
 
+// Step 2/3
 function box_storage($wrapper, step) {
   let step_config;
   switch (step) {
