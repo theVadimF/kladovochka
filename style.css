@@ -887,8 +887,12 @@ a.beige_btn {
   margin-bottom: 28px;
 }
 
-.form_dialog .box_list:not(:has(*)) {
-  margin-bottom: 0px;
+.form_dialog .box_list.__hidden {
+  display: none;
+}
+
+.form_dialog.__box_add .box_add.__initial {
+  margin-top: 0;
 }
 
 .legal_text {

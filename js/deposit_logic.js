@@ -159,10 +159,35 @@ function form_properties_next() {
   hide_active_form();
   $('.form_steps .form_step.__properties').addClass('__shown');
   $('.form_wrap .form_dialog.__box_add').addClass('__shown');
+  if ($('.form_dialog.__box_add .box_add').hasClass('__initial')) {
+    $('.form_wrap .form_next').addClass("__hidden");
+  }
+}
+
+function get_thing(amount) {
+  if (amount % 10 == 1) {
+    return " штука";
+  }
+  if (amount >= 10 && amount <= 20) {
+    return " штук";
+  }
+  if (amount % 10 < 5) {
+    return " штуки";
+  }
+  return " штука";
+}
+
+function get_box_count() {
+  let amount = $('.form_dialog.__box_add .box_edit').length;
+  if ($('.form_dialog.__box_add .form_fields').data('mode') === 'create') {
+    ++amount;
+  }
+  return amount + get_thing(amount);
 }
 
 function form_final() {
   $('.form_steps .form_step.__box_count').addClass('__shown');
+  $('.form_steps .form_step.__box_count .contents').text(get_box_count());
   $('.form_wrap .form_topper.__initial').addClass('__hidden')
   $('.form_wrap .form_topper.__final').removeClass('__hidden')
   hide_active_form();
@@ -333,7 +358,6 @@ function update_box(id) {
 }
 
 function set_box_numbers() {
-  let index = 0;
   $('.form_dialog.__box_add').find('.box_number').each(function(index) {
     $(this).text(index + 1);
   })
@@ -347,7 +371,9 @@ $('.form_dialog.__box_add .box_add').click(function() {
       $(this).text('Добавить еще коробку');
       $form_fiedls.removeClass('__hidden');
       $('.form_dialog.__box_add .topper_wrap').removeClass('__hidden');
+      $('.form_dialog.__box_add .box_list').removeClass('__hidden')
       $('.form_dialog.__box_add .form_title').text('Введите габариты и добавьте еще коробки при необходимости');
+      $('.form_wrap .form_next').removeClass('__hidden');
     } else {
       create_box_entry();
     }
@@ -406,8 +432,9 @@ $(document).ready(function() {
       $btn.text("Добавить коробку");
       $('.form_dialog.__box_add .topper_wrap').addClass('__hidden');
       $form_fiedls.addClass('__hidden');
-      $('.form_dialog.__box_add .form_title').text('Добавьте необходимое количество коробок ');
+      $('.form_dialog.__box_add .form_title').text('Добавьте необходимое количество коробок');
+      $('.form_wrap .form_next').addClass('__hidden');
+      $('.form_dialog.__box_add .box_list').addClass('__hidden')
     }
   })
-  
 })
