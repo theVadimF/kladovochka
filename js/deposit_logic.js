@@ -437,4 +437,13 @@ $(document).ready(function() {
       $('.form_dialog.__box_add .box_list').addClass('__hidden')
     }
   })
+
+  $(document).on('input', '.form_dialog.__box_add .form_input.__number', function() {
+    this.value = this.value.replace(/[^0-9\.]/g, '');
+    if (this.value.split('.').length > 2) {
+      this.value = this.value.replace(/\.+$/, "");
+    }
+  })
 })
+
+console.log($('.form_dialog.__box_add .form_input[type="number"]'));
