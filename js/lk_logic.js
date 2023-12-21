@@ -121,7 +121,6 @@ $(document).ready(function() {
     $(this).parents('.box_wrap').toggleClass('__closed');
   })
 
-  // TODO(vf) Check lock on preliminary step
   $(document).on("click", ".admin_orders .order_box .bottom_btns .accept_btn", function() {
     let $order_box = $(this).parents('.order_box');
     let $wrapper = $order_box.find('.boxes_initial');
@@ -132,9 +131,11 @@ $(document).ready(function() {
         switch (state) {
           case 'initial':
             $order_box.data('state', 'accepted');
+            $wrapper.data('lock', 1);
             $order_box.find('.delete_box').addClass('__hidden');
             $order_box.find('.box_inner_wrap .box_status_final').addClass('__shown');
             $order_box.find('.status_text').text('Принят у клиента');
+            $order_box.find('.status .contents').text('Принят у клиента');
             $(this).text('Поставить на хранение');
             $(this).siblings('.add_box').addClass('__hidden');
             break;
@@ -147,8 +148,10 @@ $(document).ready(function() {
             box_storage($wrapper, 2);
             break;
           case 'deposit_storage':
+            $wrapper.data('lock', 2);
             $order_box.data('state', 'in_storage');
             $order_box.find('.status_text').text('Поставлен на хранение');
+            $order_box.find('.status .contents').text('На хранении');
             $(this).parent().addClass('__hidden');
             break;
           default:
@@ -159,10 +162,12 @@ $(document).ready(function() {
       case "terminal_receive":
         switch (state) {
           case "initial":
+            $wrapper.data('lock', 1);
             $order_box.data('state', 'in_terminal');
             $order_box.find('.delete_box').addClass('__hidden');
             $order_box.find('.box_inner_wrap .box_status_final').addClass('__shown');
             $order_box.find('.status_text').text('Принят у клиента');
+            $order_box.find('.status .contents').text('Принят у клиента');
             $(this).siblings('.add_box').addClass('__hidden');
             $(this).parent().addClass('__hidden');
             break;
@@ -174,6 +179,7 @@ $(document).ready(function() {
       case 'terminal_courier':
         switch (state) {
           case 'initial':
+            $wrapper.data('lock', 1);
             $order_box.data('state', 'deposit_storage');
             $(this).text('Отправить на склад');
             $(this).attr('disabled', true);
@@ -181,17 +187,21 @@ $(document).ready(function() {
             $order_box.find('.box_top .box_status_final').addClass('__shown');
             box_storage($order_box.find(".boxes_initial"), 2);
             $order_box.find('.status_text').text('Передан курьеру');
+            $order_box.find('.status .contents').text('Передан курьеру');
             break;
           case 'deposit_storage':
             $order_box.data('state', 'to_storage');
             $(this).text('На хранении');
             $(this).attr('disabled', true);
             box_storage($order_box.find(".boxes_initial"), 3);
+            $wrapper.data('lock', 2);
             break;
           case 'to_storage':
             $order_box.data('state', 'in_storage');
             $order_box.find('.status_text').text('Поставлен на хранение');
+            $order_box.find('.status .contents').text('Поставлен на хранение');
             $(this).parent().addClass('__hidden');
+            $wrapper.data('lock', 3);
             break;
           default:
             console.error("Unknown state " + state);
@@ -204,6 +214,7 @@ $(document).ready(function() {
             $order_box.data('state', 'picked_up');
             $wrapper.data('lock', 1);
             $order_box.find('.status_text').text('Снят с хранения');
+            $order_box.find('.status .contents').text('Снят с хранения');
             $order_box.find('.box_top .box_status_final').addClass('__shown');
             $(this).text('Выдать');
             break;
@@ -213,8 +224,10 @@ $(document).ready(function() {
             box_storage($wrapper, 2);
             break;
           case 'return_to_client':
+            $wrapper.data('lock', 2);
             $order_box.data('state', 'completed');
             $order_box.find('.status_text').text('Передан клиенту');
+            $order_box.find('.status .contents').text('Передан клиенту');
             $(this).parent().addClass('__hidden');
             break;
           default:
@@ -228,6 +241,7 @@ $(document).ready(function() {
             $order_box.data('state', 'picked_up');
             $wrapper.data('lock', 1);
             $order_box.find('.status_text').text('Снят со склада');
+            $order_box.find('.status .contents').text('Снят со склада');
             $order_box.find('.box_top .box_status_final').addClass('__shown');
             $(this).parent().addClass('__hidden');
             break;
@@ -241,12 +255,14 @@ $(document).ready(function() {
           case 'initial':
             $order_box.data('state', 'in_terminal');
             $order_box.find('.status_text').text('Передан в терминал');
+            $order_box.find('.status .contents').text('Передан в терминал');
             $(this).text('Выдан клиенту');
             $(this).attr('disabled', true);
             $wrapper.data('lock', 2);
             box_storage($wrapper, 3);
             break;
           case 'in_terminal':
+            $order_box.find('.status_text').text('Передан клиенту');
             $order_box.find('.status_text').text('Передан клиенту');
             $wrapper.data('lock', 3);
             $(this).parent().addClass('__hidden');
@@ -345,28 +361,25 @@ $('.admin_orders .order_box .bottom .accept_initial').click(function() {
   $(this).addClass('__hidden');
   let $hidden_block = $(this).parents('.hidden_block');
   let $outer_wrapper = $hidden_block.parents('.order_box');
+  $outer_wrapper.find('.status .contents').text('взят в работу');
+  $outer_wrapper.find('.status').addClass('__shown');
   let id = $(this).parents('.order_box').data('order-num');
   let type = $outer_wrapper.data('type')
   let dynamic = is_box_dynamic(type);
-  // TODO(vf) rework this
-  let hide_add_box = "";
-  let hide_accept = "__hidden";
-  if (!dynamic) {
-    hide_add_box = "__hidden"
-    hide_accept = ""
-  }
   $hidden_block.append(`
     <div class="boxes_initial" data-lock="0" data-order-num="${id}" data-id-origin="0">
     </div>
     <div class="bottom_btns box_wrap">
-      <button class="beige_btn bottom_btn __white add_box ${hide_add_box}">Добавить коробку / место</button>
-      <button class="beige_btn bottom_btn accept_btn ${hide_accept}" disabled autocomplete="off">${accept_btn_text(type)}</button>
+      <button class="beige_btn bottom_btn __white add_box">Добавить коробку / место</button>
+      <button class="beige_btn bottom_btn accept_btn" disabled autocomplete="off">${accept_btn_text(type)}</button>
     </div>
   `);
   let $wrapper = $hidden_block.find('.boxes_initial');
   if (dynamic) {
+    $hidden_block.find('.accept_btn').addClass('__hidden');
     init_box_add();
   } else {
+    $hidden_block.find('.add_box').addClass('__hidden');
     let box_count = parseInt($outer_wrapper.data('box-count'));
     for (let i = 1; i <= box_count; ++i) {
       add_box($wrapper, false);
@@ -374,7 +387,6 @@ $('.admin_orders .order_box .bottom .accept_initial').click(function() {
   }
 })
 
-// TODO(vf) Show top status
 function init_box_add() {
   $('.admin_orders .order_box .bottom_btns .add_box').click(function() {
     $(this).text("Добавить еще коробку");
@@ -532,19 +544,12 @@ function add_box($wrapper, allow_delete) {
   let id = $wrapper.data('order-num');
   let box_id = parseInt($wrapper.data('id-origin')) + 1;
   let step_config = configure_step1($wrapper.parents('.order_box').data('type'));
-  // TODO(vf) Rework this
-  let hide_delete = "";
-  let show_topper = "__shown";
-  if (!allow_delete) {
-    show_topper = "";
-    hide_delete = "__hidden";
-  }
   $wrapper.data('id-origin', box_id);
   $wrapper.append(`
     <div class="box_wrap" id="box${id}_${box_id}">
       <div class="box_top">
-        <p class="text bold_info box_topper ${show_topper}">Коробка <span class="box_number">0</span></p>
-        <button class="transparent_btn delete_box ${hide_delete}">Удалить</button>
+        <p class="text bold_info box_topper">Коробка <span class="box_number">0</span></p>
+        <button class="transparent_btn delete_box">Удалить</button>
         <p class="text box_status_final"><b class="bold_info">Статус: </b><span class="status_text">Принят у клиента</status></p>
       </div>
       <div class="box_inner_wrap">
@@ -563,6 +568,11 @@ function add_box($wrapper, allow_delete) {
       </div>
     </div>
   `)
+  if (allow_delete) {
+    $wrapper.find(".box_top .box_topper").addClass("__shown");
+  } else {
+    $wrapper.find(".box_top .delete_box").addClass("__hidden");
+  }
   set_box_numbers($wrapper);
 }
 
@@ -579,7 +589,7 @@ function box_storage($wrapper, step) {
       console.log("Unknown step: " + step); 
       break;
   }
-  $wrapper.data('lock', step - 1);  // TODO(vf) Move to config
+  // $wrapper.data('lock', step - 1);
   $wrapper.children('.box_wrap').each(function() {
     $(this).addClass('__storage');
     $(this).find('.box_inner_wrap').append(`
