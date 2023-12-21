@@ -445,5 +445,3 @@ $(document).ready(function() {
     }
   })
 })
-
-console.log($('.form_dialog.__box_add .form_input[type="number"]'));
