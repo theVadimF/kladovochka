@@ -780,6 +780,14 @@ a.beige_btn {
   margin-top: 36px;
 }
 
+.form_dialog .form_fields.__hidden {
+  display: none;
+}
+
+.box_input .topper.__hidden {
+  display: none;
+}
+
 .form_dialog .form_fields.__4 {
   grid-template-columns: repeat(4, 1fr);
 }
@@ -844,6 +852,28 @@ a.beige_btn {
   cursor: pointer;
 }
 
+.form_dialog.__box_add .topper_wrap {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.form_dialog.__box_add .topper_wrap.__hidden {
+  display: none;
+}
+
+.form_dialog.__box_add .delete_box {
+  font-size: 14px;
+  font-weight: 600;
+  color: #CEA075;
+  text-align: left;
+  cursor: pointer;
+}
+
+.form_dialog .box_edit.__hidden {
+  display: none;
+}
+
 .form_dialog .box_edit .icon {
   width: 20px;
   height: 20px;
@@ -855,6 +885,10 @@ a.beige_btn {
   flex-direction: column;
   gap: 8px;
   margin-bottom: 28px;
+}
+
+.form_dialog .box_list:not(:has(*)) {
+  margin-bottom: 0px;
 }
 
 .legal_text {
