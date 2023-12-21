@@ -236,6 +236,25 @@ $(document).ready(function() {
             break;
         }
         break;
+      case 'manager':
+        switch (state) {
+          case 'initial':
+            $order_box.data('state', 'in_terminal');
+            $order_box.find('.status_text').text('Передан в терминал');
+            $(this).text('Выдан клиенту');
+            $(this).attr('disabled', true);
+            $wrapper.data('lock', 2);
+            box_storage($wrapper, 3);
+            break;
+          case 'in_terminal':
+            $order_box.find('.status_text').text('Передан клиенту');
+            $wrapper.data('lock', 3);
+            $(this).parent().addClass('__hidden');
+            break;
+          default:
+            break;
+        }
+        break;
       default:
         console.error('Unknown type ' + type);
         break;
@@ -459,6 +478,18 @@ function configure_step2(type) {
           success: `Фото выдачи коробки <span class="box_number">0</span> добавлено`,
         }
       }
+    case 'manager':
+      return {
+        scan: {
+          initial: `Добавьте скан коробки <span class="box_number">0</span>`,
+          success: `Скан коробки <span class="box_number">0</span> добавлен`,
+          type: "barcode"
+        },
+        img: {
+          initial: `Добавьте фото передачи в терминал <span class="box_number">0</span>`,
+          success: `Фото передачи в терминал добавлено`,
+        }
+      }
     default:
       console.error("Unknown type " + type);
       break;
@@ -477,6 +508,18 @@ function configure_step3(type) {
         img: {
           initial: `Добавьте фото хранения <span class="box_number">0</span>`,
           success: `Фото хранения <span class="box_number">0</span> добавлено`,
+        }
+      }
+    case 'manager':
+      return {
+        scan: {
+          initial: `Отсканируйте коробку <span class="box_number">0</span>`,
+          success: `Коробка <span class="box_number">0</span> отсканирована`,
+          type: "code"
+        },
+        img: {
+          initial: `Добавьте фото выдачи клиенту`,
+          success: `Фото выдачи клиенту добавлено`,
         }
       }
     default:
