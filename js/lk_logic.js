@@ -222,6 +222,20 @@ $(document).ready(function() {
             break;
         }
         break;
+      case 'terminal_return':
+        switch (state) {
+          case 'initial':
+            $order_box.data('state', 'picked_up');
+            $wrapper.data('lock', 1);
+            $order_box.find('.status_text').text('Снят со склада');
+            $order_box.find('.box_top .box_status_final').addClass('__shown');
+            $(this).parent().addClass('__hidden');
+            break;
+          default:
+            console.error("Unknown state " + state);
+            break;
+        }
+        break;
       default:
         console.error('Unknown type ' + type);
         break;
@@ -290,7 +304,8 @@ function is_box_dynamic(type) {
   switch (type) {
     case 'courier_return':
       return false;
-
+    case 'terminal_return':
+      return false;
     default:
       return true;
   }
@@ -300,7 +315,8 @@ function accept_btn_text(type) {
   switch (type) {
     case 'courier_return':
       return "Снят с хранения";
-  
+    case 'terminal_return':
+      return "Снят со склада";
     default:
       return "Принять"
   }
@@ -376,6 +392,18 @@ function configure_step1(type) {
         }
       }
     case "courier_return":
+      return {
+        scan: {
+          initial: `Добавьте штрих-код места <span class="box_number">0</span>`,
+          success: `Штрих-код места <span class="box_number">0</span> добавлен`,
+          type: "qrcode"
+        },
+        img: {
+          initial: `Добавьте фото снятия со склада <span class="box_number">0</span>`,
+          success: `Фото снятия со склада <span class="box_number">0</span> добавлено`,
+        }
+      }
+    case "terminal_return":
       return {
         scan: {
           initial: `Добавьте штрих-код места <span class="box_number">0</span>`,
