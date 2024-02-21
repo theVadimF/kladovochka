@@ -159,10 +159,35 @@ function form_properties_next() {
   hide_active_form();
   $('.form_steps .form_step.__properties').addClass('__shown');
   $('.form_wrap .form_dialog.__box_add').addClass('__shown');
+  if ($('.form_dialog.__box_add .box_add').hasClass('__initial')) {
+    $('.form_wrap .form_next').addClass("__hidden");
+  }
+}
+
+function get_thing(amount) {
+  if (amount % 10 == 1) {
+    return " штука";
+  }
+  if (amount >= 10 && amount <= 20) {
+    return " штук";
+  }
+  if (amount % 10 < 5) {
+    return " штуки";
+  }
+  return " штука";
+}
+
+function get_box_count() {
+  let amount = $('.form_dialog.__box_add .box_edit').length;
+  if ($('.form_dialog.__box_add .form_fields').data('mode') === 'create') {
+    ++amount;
+  }
+  return amount + get_thing(amount);
 }
 
 function form_final() {
   $('.form_steps .form_step.__box_count').addClass('__shown');
+  $('.form_steps .form_step.__box_count .contents').text(get_box_count());
   $('.form_wrap .form_topper.__initial').addClass('__hidden')
   $('.form_wrap .form_topper.__final').removeClass('__hidden')
   hide_active_form();
@@ -293,4 +318,130 @@ $('.form_wrap .form_steps .form_step').click(function() {
       $('.form_wrap .form_dialog.__type').addClass('__shown');
       break;
   }
+})
+
+function create_box_entry() {
+  let weight = $('.form_dialog.__box_add .form_input.__weight').val();
+  let length = $('.form_dialog.__box_add .form_input.__length').val();
+  let width = $('.form_dialog.__box_add .form_input.__width').val();
+  let height = $('.form_dialog.__box_add .form_input.__height').val();
+  let comment = $('.form_dialog.__box_add .form_input.__comment').val();
+  let id = $('.form_dialog.__box_add').data('id-origin');
+  $('.form_dialog.__box_add').data('id-origin', id + 1);
+  $('.form_dialog.__box_add .box_list').append(`
+    <button class="transparent_btn box_edit text" id="box_${id}">
+      <p class="info">
+        Коробка <span class="box_number">0</span>: 
+        <span class="weight">${weight}</span> кг, 
+        <span class="length">${length}</span>х<span class="width">${width}</span>х<span class="height">${height}</span>. 
+        <span class="comment">${comment}</span>
+      </p>
+      <img src="./img/ico/edit_pencil.png" alt="" class="icon">
+    </button>
+  `)
+  $('.form_dialog.__box_add .form_input').val("");
+}
+
+function update_box(id) {
+  let weight = $('.form_dialog.__box_add .form_input.__weight').val();
+  let length = $('.form_dialog.__box_add .form_input.__length').val();
+  let width = $('.form_dialog.__box_add .form_input.__width').val();
+  let height = $('.form_dialog.__box_add .form_input.__height').val();
+  let comment = $('.form_dialog.__box_add .form_input.__comment').val();
+  $(`#${id} .weight`).text(weight);
+  $(`#${id} .length`).text(length);
+  $(`#${id} .width`).text(width);
+  $(`#${id} .height`).text(height);
+  $(`#${id} .comment`).text(comment);
+  $(`#${id}`).removeClass('__hidden');
+  $('.form_dialog.__box_add .form_input').val("");
+}
+
+function set_box_numbers() {
+  $('.form_dialog.__box_add').find('.box_number').each(function(index) {
+    $(this).text(index + 1);
+  })
+}
+
+$('.form_dialog.__box_add .box_add').click(function() {
+  let $form_fiedls = $(".form_dialog.__box_add .form_fields");
+  if ($form_fiedls.data("mode") === "create") {
+    if ($(this).hasClass('__initial')) {
+      $(this).removeClass('__initial');
+      $(this).text('Добавить еще коробку');
+      $form_fiedls.removeClass('__hidden');
+      $('.form_dialog.__box_add .topper_wrap').removeClass('__hidden');
+      $('.form_dialog.__box_add .box_list').removeClass('__hidden')
+      $('.form_dialog.__box_add .form_title').text('Введите габариты и добавьте еще коробки при необходимости');
+      $('.form_wrap .form_next').removeClass('__hidden');
+    } else {
+      create_box_entry();
+    }
+    set_box_numbers();
+  } else {
+    let $form_fiedls = $(".form_dialog.__box_add .form_fields");
+    update_box($form_fiedls.data('target-id'));
+    $form_fiedls.data("mode", "create");
+    set_box_numbers();
+  }
+})
+
+function init_edit(element) {
+  set_box_numbers();
+  $(element).addClass("__hidden");
+  $(".form_dialog.__box_add .form_fields").data("mode", "edit");
+  $(".form_dialog.__box_add .form_fields").data("target-id", $(element).attr('id'));
+  let weight = $(element).find('.weight').text();
+  let length = $(element).find('.length').text();
+  let width = $(element).find('.width').text();
+  let height = $(element).find('.height').text();
+  let comment = $(element).find('.comment').text();
+  let number = $(element).find('.box_number').text();
+  $(".form_dialog.__box_add .form_fields .form_input.__weight").val(weight);
+  $(".form_dialog.__box_add .form_fields .form_input.__length").val(length);
+  $(".form_dialog.__box_add .form_fields .form_input.__width").val(width);
+  $(".form_dialog.__box_add .form_fields .form_input.__height").val(height);
+  $(".form_dialog.__box_add .form_fields .form_input.__comment").val(comment);
+  $(".form_dialog.__box_add .topper .box_number").text(number);
+}
+
+$(document).ready(function() {
+  $(document).on("click", ".form_dialog.__box_add .box_edit" , function() {
+    if ($(".form_dialog.__box_add .form_fields").data("mode") === 'edit') {
+      let $form_fiedls = $(".form_dialog.__box_add .form_fields");
+      update_box($form_fiedls.data('target-id'));
+    } else {
+      create_box_entry();
+    }
+    init_edit(this);
+  })
+
+  $(document).on("click", ".form_dialog.__box_add .delete_box" , function() {
+    let $form_fiedls = $(".form_dialog.__box_add .form_fields");
+    if ($form_fiedls.data('mode') === 'edit') {
+      let id = $form_fiedls.data('target-id');
+      $(`#${id}`).remove();
+    }
+    let $boxes = $('.form_dialog.__box_add .box_edit')
+    if ($boxes.length >= 1) {
+      init_edit($boxes[$boxes.length - 1]);
+      $form_fiedls.data('mode', 'edit');
+    } else {
+      let $btn = $(".form_dialog.__box_add .box_add");
+      $btn.addClass('__initial');
+      $btn.text("Добавить коробку");
+      $('.form_dialog.__box_add .topper_wrap').addClass('__hidden');
+      $form_fiedls.addClass('__hidden');
+      $('.form_dialog.__box_add .form_title').text('Добавьте необходимое количество коробок');
+      $('.form_wrap .form_next').addClass('__hidden');
+      $('.form_dialog.__box_add .box_list').addClass('__hidden')
+    }
+  })
+
+  $(document).on('input', '.form_dialog.__box_add .form_input.__number', function() {
+    this.value = this.value.replace(/[^0-9\.]/g, '');
+    if (this.value.split('.').length > 2) {
+      this.value = this.value.replace(/\.+$/, "");
+    }
+  })
 })

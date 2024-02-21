@@ -10,13 +10,12 @@ const updateBtn = (data, id) => {
   let base64 = qr._oDrawing._elCanvas.toDataURL("image/png");
   let target_step = $('.popup.__scanner').data('target-step');
   $(`#${id} .box_scan_btn[data-step="${target_step}"] .preview.__qr`).attr('src', base64);
-  $(`#${id} .box_scan_btn[data-step="${target_step}"] .box_status.__qr`).text(
-    $('.popup.__scanner').data("success-text")
-  );
-  $(`#${id} .box_scan_btn[data-step=${target_step}]`).addClass("__added").trigger('boxBtnUpdate');
+  $(`#${id} .box_scan_btn[data-step="${target_step}"] .box_status.__qr`).addClass('__hidden');
+  $(`#${id} .box_scan_btn[data-step="${target_step}"] .box_status.__qr.__success`).removeClass('__hidden');
+  $(`#${id} .box_scan_btn[data-step=${target_step}]`).addClass("__added");
+  $(`#${id}`).parents('.boxes_initial').trigger('boxBtnUpdate');
   $(`#${id} .box_img_btn[data-step=${target_step}]`).prop("disabled", false);
   $(`#${id} .box_topper`).addClass('__shown');
-
 }
 
 const handleResult = (data) => {
@@ -150,17 +149,9 @@ function clear_code_digits() {
   })
 }
 
-$('.admin_orders .boxes_initial .box_scan_btn').click(function() {
-  let scan_type = $(this).data('scan-type');
-  if (scan_type === 'code') {
-    if (!$(this).hasClass('__added')) {
-      clear_code_digits();
-      $('.popup.__code').data("target-id", $(this).parents('.box_wrap').attr('id'));
-      $('.popup.__code').data("target-step", $(this).data('step'));
-      $('.popup.__code').data("success-text", $(this).data('success-text'));
-      $('.popup.__code').addClass('__shown');
-    }
-  } else {
+$(document).ready(function() {
+  $(document).on("click", ".admin_orders .boxes_initial .box_scan_btn" , function() {
+    let scan_type = $(this).data('scan-type');
     if ($(this).hasClass('__added')) {
       $('.popup.__img_preview .preview').attr('src',
         $($(this).children('.preview')).attr('src')
@@ -178,13 +169,19 @@ $('.admin_orders .boxes_initial .box_scan_btn').click(function() {
       );
       $('.popup.__img_preview').addClass('__shown');
     } else {
-      $('.popup.__scanner').data("target-id", $(this).parents('.box_wrap').attr('id'));
-      $('.popup.__scanner').data("target-step", $(this).data('step'));
-      $('.popup.__scanner').data("success-text", $(this).data('success-text'));
-      $('.popup.__scanner').addClass('__shown');
-      Init(scan_type);
+      if (scan_type === 'code') {
+        clear_code_digits();
+        $('.popup.__code').data("target-id", $(this).parents('.box_wrap').attr('id'));
+        $('.popup.__code').data("target-step", $(this).data('step'));
+        $('.popup.__code').addClass('__shown');
+      } else {
+        $('.popup.__scanner').data("target-id", $(this).parents('.box_wrap').attr('id'));
+        $('.popup.__scanner').data("target-step", $(this).data('step'));
+        $('.popup.__scanner').addClass('__shown');
+        Init(scan_type);
+      }
     }
-  }
+  });
 })
 
 $('.popup .float_buttons .replace.__qr').click(function() {

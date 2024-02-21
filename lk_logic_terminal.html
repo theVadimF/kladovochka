@@ -103,6 +103,28 @@
       </div>
     </div>
   </div>
+  <div class="popup __block __code" data-target-id="" data-target-step="">
+    <div class="admin-wrap __relative">
+      <div class="float_buttons">
+        <button class="close transparent_btn">
+          <img src="./img/ico/close_btn.png" alt="" class="icon">
+        </button>
+      </div>
+      <div class="code_outer">
+        <div class="code_wrap">
+          <p class="text">Введите код подтверждения</p>
+          <div class="digit_wrap">
+            <input type="number" class="digit" maxlength="1">
+            <input type="number" class="digit" maxlength="1">
+            <input type="number" class="digit" maxlength="1">
+            <input type="number" class="digit" maxlength="1">
+            <input type="number" class="digit" maxlength="1">
+            <input type="number" class="digit" maxlength="1">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="lk_top admin-wrap __no_padding">
     <p class="bold_heading">Работа с заявками</p>
     <div class="long_nav">
@@ -167,13 +189,13 @@
         <p class="text">Тип заявки</p>
       </div>
       <div class="orders">
-        <div class="order_box __open">
-          <p class="text bold_info status __shown">Статус: взят в работу</p>
+        <div class="order_box" data-order-num="001" data-type="terminal_receive" data-state="initial">
+          <p class="text bold_info status">Статус: <span class="contents">Снят со склад</span></p>
           <div class="order_grid grid">
             <p class="text"><b class="bold_info">Номер: </b>001</p>
             <p class="text __date"><b class="bold_info">Дата: </b>20.09.23</p>
             <p class="text hide_mobile __name"><b class="bold_info">ФИО: </b>Иванов И.И.</p>
-            <p class="text __type"><b class="bold_info">Тип: </b>Курьером</p>
+            <p class="text __type"><b class="bold_info">Тип: </b>В терминале</p>
             <p class="text __details __address"><b class="bold_info">Адрес: </b>Ленина, 1</p>
             <p class="text __details __comment"><b class="bold_info">Комментарий: </b>позвоните за 30 минут</p>
             <p class="text __details __properties"><b class="bold_info">Свойства: </b>хрупкое</p>
@@ -181,39 +203,7 @@
           <div class="hidden_block">
             <div class="bottom">
               <p class="text __details"><b class="bold_info">Вещи в заявке: </b>коробка 1 (1,2 кг, 50х50х80), коробка 2 (2 кг, 40х30х50)</p>
-              <button class="beige_btn dialog_btn accept_initial __hidden">Принять</button>
-            </div>
-            <div class="boxes_initial" data-lock="0">
-              <div class="box_wrap" id="box001_1" data-qr="">
-                <p class="text bold_info box_topper">Коробка 1</p>
-                <button class="transparent_btn box_btn box_scan_btn text" data-step="1" data-success-text="Штрих-код добавлен" data-scan-type="qrcode">
-                  <span class="box_status __qr">Добавьте штрих-код коробки 1</span>
-                  <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
-                </button>
-                <input type="file" id="001_01" class="box_img_input" accept="image/*" capture data-step="1">
-                <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off" data-step="1" data-success-text="Фото добавлено">
-                  <span class="box_status __img">Добавьте фото коробки 1</span>
-                  <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">
-                </button>
-                <p class="text box_status_final"><b class="bold_info">Статус: </b>Принят у клиента</p>
-              </div>
-              <div class="box_wrap" id="box001_2" data-qr="">
-                <p class="text bold_info box_topper">Коробка 2</p>
-                <button class="transparent_btn box_btn box_scan_btn text" data-step="1" data-success-text="Штрих-код добавлен" data-scan-type="qrcode">
-                  <span class="box_status __qr">Добавьте штрих-код коробки 2</span>
-                  <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
-                </button>
-                <input type="file" id="001_02" class="box_img_input" accept="image/*" capture data-step="1">
-                <button class="transparent_btn box_btn box_img_btn text" disabled autocomplete="off" data-step="1" data-success-text="Фото добавлено">
-                  <span class="box_status __img">Добавьте фото коробки 2</span>
-                  <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">
-                </button>
-                <p class="text box_status_final"><b class="bold_info">Статус: </b>Принят у клиента</p>
-              </div>
-            </div>
-            <div class="bottom_btns box_wrap">
-              <button class="beige_btn bottom_btn __white add_box">Добавить ещё коробку</button>
-              <button class="beige_btn bottom_btn accept_btn" disabled autocomplete="off">Принять</button>
+              <button class="beige_btn dialog_btn accept_initial">Взять в работу</button>
             </div>
           </div>
           <button class="transparent_btn toggle_order">

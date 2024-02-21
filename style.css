@@ -780,6 +780,14 @@ a.beige_btn {
   margin-top: 36px;
 }
 
+.form_dialog .form_fields.__hidden {
+  display: none;
+}
+
+.box_input .topper.__hidden {
+  display: none;
+}
+
 .form_dialog .form_fields.__4 {
   grid-template-columns: repeat(4, 1fr);
 }
@@ -844,6 +852,28 @@ a.beige_btn {
   cursor: pointer;
 }
 
+.form_dialog.__box_add .topper_wrap {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.form_dialog.__box_add .topper_wrap.__hidden {
+  display: none;
+}
+
+.form_dialog.__box_add .delete_box {
+  font-size: 14px;
+  font-weight: 600;
+  color: #CEA075;
+  text-align: left;
+  cursor: pointer;
+}
+
+.form_dialog .box_edit.__hidden {
+  display: none;
+}
+
 .form_dialog .box_edit .icon {
   width: 20px;
   height: 20px;
@@ -855,6 +885,14 @@ a.beige_btn {
   flex-direction: column;
   gap: 8px;
   margin-bottom: 28px;
+}
+
+.form_dialog .box_list.__hidden {
+  display: none;
+}
+
+.form_dialog.__box_add .box_add.__initial {
+  margin-top: 0;
 }
 
 .legal_text {
@@ -1188,7 +1226,6 @@ a.beige_btn {
 }
 
 .admin_orders .boxes_initial .box_topper {
-  grid-column: 1/4;
   display: none;
   flex-shrink: 0;
 }
@@ -1588,6 +1625,71 @@ a.beige_btn {
 
 .popup .code_wrap .digit_wrap .digit[type=number] {
   -moz-appearance: textfield;
+}
+
+.admin_orders .order_box .box_inner_wrap .box_status_final {
+  margin-top: 8px;
+}
+
+.admin_orders .boxes_initial .box_btn.delete_box {
+  margin-top: 0;
+  font-size: 14px;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.admin_orders .boxes_initial .box_btn.delete_box .icon {
+  height: 12px;
+  width: 12px;
+}
+
+.admin_orders .box_wrap .box_top {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 5px;
+  align-items: center;
+}
+
+.admin_orders .boxes_initial .box_inner_wrap .box_btn.__wide {
+  grid-column: 2/4;
+  grid-row: 1;
+}
+
+.admin_orders .box_wrap .box_number_wrap {
+  display: none;
+}
+
+.admin_orders .box_wrap .box_number_wrap.__shown {
+  display: inline;
+}
+
+.admin_orders .boxes_initial .box_btn.delete_box.__hidden {
+  display: none;
+}
+
+.admin_orders .boxes_initial .box_btn .box_status.__hidden {
+  display: none;
+}
+
+.admin_orders .box_wrap .box_top .delete_box {
+  font-size: 14px;
+  font-weight: 600;
+  color: #CEA075;
+  text-align: left;
+  cursor: pointer;
+}
+
+.admin_orders .box_wrap .box_top .delete_box.__hidden {
+  display: none;
+}
+
+.admin_orders .box_inner_wrap .box_img_btn {
+  grid-column: 2/4;
+}
+
+
+.admin_orders .box_inner_wrap:has(.box_status_final.__shown) .box_img_btn {
+  grid-column: 2;
 }
 
 @media (max-width: 980px) {

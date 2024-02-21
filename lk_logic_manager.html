@@ -103,7 +103,7 @@
       </div>
     </div>
   </div>
-  <div class="popup __block __code" data-target-id="" data-target-step="" data-success-text="">
+  <div class="popup __block __code" data-target-id="" data-target-step="">
     <div class="admin-wrap __relative">
       <div class="float_buttons">
         <button class="close transparent_btn">
@@ -189,13 +189,13 @@
         <p class="text">Тип заявки</p>
       </div>
       <div class="orders">
-        <div class="order_box __open">
-          <p class="text bold_info status __shown">Статус: взят в работу</p>
+        <div class="order_box" data-order-num="001" data-type="manager" data-state="initial" data-box-count="1">
+          <p class="text bold_info status __shown">Статус: <span class="contents">Снят со склада</span></p>
           <div class="order_grid grid">
             <p class="text"><b class="bold_info">Номер: </b>001</p>
             <p class="text __date"><b class="bold_info">Дата: </b>20.09.23</p>
             <p class="text hide_mobile __name"><b class="bold_info">ФИО: </b>Иванов И.И.</p>
-            <p class="text __type"><b class="bold_info">Тип: </b>Курьером</p>
+            <p class="text __type"><b class="bold_info">Тип: </b>В терминале</p>
             <p class="text __details __address"><b class="bold_info">Адрес: </b>Ленина, 1</p>
             <p class="text __details __comment"><b class="bold_info">Комментарий: </b>позвоните за 30 минут</p>
             <p class="text __details __properties"><b class="bold_info">Свойства: </b>хрупкое</p>
@@ -203,100 +203,50 @@
           <div class="hidden_block">
             <div class="bottom">
               <p class="text __details"><b class="bold_info">Вещи в заявке: </b>коробка 1 (1,2 кг, 50х50х80), коробка 2 (2 кг, 40х30х50)</p>
-              <button class="beige_btn dialog_btn accept_initial __hidden">Принять</button>
+              <button class="beige_btn dialog_btn accept_initial __hidden">Взять в работу</button>
             </div>
-            <div class="boxes_initial" data-lock="1">
+            <div class="boxes_initial" data-lock="1" data-order-num="001" data-id-origin="0">
               <div class="box_wrap __storage" id="box001_1">
                 <div class="box_top">
-                  <p class="text bold_info box_topper __shown">Коробка 1</p>
-                  <p class="text box_status_final __shown"><b class="bold_info">Статус: </b>Принят у клиента</p>
+                  <p class="text bold_info box_topper __shown">Коробка <span class="box_number">1</span></p>
+                  <button class="transparent_btn delete_box __hidden">Удалить</button>
+                  <p class="text box_status_final __shown"><b class="bold_info">Статус: </b><span class="status_text">Принят у клиента</span></p>
                 </div>
                 <div class="box_inner_wrap">
-                  <button class="transparent_btn box_btn box_scan_btn text __added" data-step="1" data-success-text="Коробка 1 отсканирована" data-scan-type="qrcode">
-                    <span class="box_status __qr">Штрих-код добавлен</span>
+                  <button class="transparent_btn box_btn box_scan_btn text __added" data-step="1" data-scan-type="barcode">
+                    <span class="box_status __qr __hidden">Добавьте штрих-код коробки <span class="box_number">1</span></span>
+                    <span class="box_status __qr __success">Штрих-код места <span class="box_number">1</span> добавлен</span>
                     <img src="./img/qr_placeholder.png" alt="" class="preview __qr">
                   </button>
-                  <input type="file" class="box_img_input" accept="image/*" capture data-step="1">
-                  <button class="transparent_btn box_btn box_img_btn text __added" autocomplete="off" data-step="1" data-success-text="Фото выдачи клиенту добавлено">
-                    <span class="box_status __img">Фото добавлено</span>
+                  <input type="file" class="box_img_input" accept="image/*" capture="" data-step="1">
+                  <button class="transparent_btn box_btn box_img_btn text __added" autocomplete="off" data-step="1">
+                    <span class="box_status __img __hidden">Добавьте фото коробки <span class="box_number">1</span></span>
+                    <span class="box_status __img __success">Фото снятия со склада <span class="box_number">1</span> добавлено</span>
                     <img src="./img/box_img_placeholder.png" alt="" class="preview __img">
                   </button>
-                </div>
-                <div class="box_inner_wrap">
-                  <button class="transparent_btn box_btn __spot box_scan_btn text __added" data-step="2" data-success-text="Скан коробки 1 добавлен" data-scan-type="qrcode">
-                    <span class="box_status __qr">Скан коробки 1 добавлен</span>
-                    <img src="./img/qr_placeholder.png" alt="" class="preview __qr">
-                  </button>
-                  <input type="file" class="box_img_input" accept="image/*" capture data-step="2">
-                  <button class="transparent_btn box_btn __spot box_img_btn text __added" data-step="2" data-success-text="Фото передачи в терминал добавлено">
-                    <span class="box_status __img">Фото передачи в терминал добавлено</span>
-                    <img src="./img/box_img_placeholder.png" alt="" class="preview __img">
-                  </button>
-                </div>
-                <div class="box_inner_wrap">
-                  <button class="transparent_btn box_btn __spot box_scan_btn text" data-step="3" data-success-text="Скан места добавлен" data-scan-type="code">
-                    <span class="box_status __qr">Отсканируйте коробку 1</span>
+                  <p class="text box_status_final"><b class="bold_info">Статус: </b><span class="status_text">Принят у клиента</span></p>
+                  <button class="transparent_btn box_btn box_scan_btn text" data-step="2" data-scan-type="qrcode">
+                    <span class="box_status __qr">Добавьте скан коробки <span class="box_number">1</span></span>
+                    <span class="box_status __qr __success __hidden">кан коробки <span class="box_number">1</span> добавлен</span>
                     <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
                   </button>
-                  <input type="file" class="box_img_input" accept="image/*" capture data-step="3">
-                  <button class="transparent_btn box_btn __spot box_img_btn text" data-step="3" data-success-text="Фото хранения добавлено" disabled autocomplete="off">
-                    <span class="box_status __img">Добавьте фото выдачи клиенту</span>
+                  <input type="file" class="box_img_input" accept="image/*" capture="" data-step="2">
+                  <button class="transparent_btn box_btn box_img_btn text" disabled="" autocomplete="off" data-step="2">
+                    <span class="box_status __img">Добавьте фото передачи в терминал <span class="box_number">1</span></span>
+                    <span class="box_status __img __success __hidden">Фото передачи в терминал добавлено</span>
                     <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">
                   </button>
-                </div>
-                <button class="transparent_btn toggle_box">
-                  <svg class="expand_icon" xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
-                    <path d="M5 8L0.669872 0.5L9.33013 0.5L5 8Z" fill="#CEA075"></path>
-                  </svg>
-                </button>
-              </div>
-              <div class="box_wrap __storage" id="box001_2">
-                <div class="box_top">
-                  <p class="text bold_info box_topper __shown">Коробка 1</p>
-                  <p class="text box_status_final __shown"><b class="bold_info">Статус: </b>Принят у клиента</p>
-                </div>
-                <div class="box_inner_wrap">
-                  <button class="transparent_btn box_btn box_scan_btn text __added" data-step="1" data-success-text="Коробка 1 отсканирована" data-scan-type="qrcode">
-                    <span class="box_status __qr">Штрих-код добавлен</span>
-                    <img src="./img/qr_placeholder.png" alt="" class="preview __qr">
-                  </button>
-                  <input type="file" class="box_img_input" accept="image/*" capture data-step="1">
-                  <button class="transparent_btn box_btn box_img_btn text __added" autocomplete="off" data-step="1" data-success-text="Фото выдачи клиенту добавлено">
-                    <span class="box_status __img">Фото добавлено</span>
-                    <img src="./img/box_img_placeholder.png" alt="" class="preview __img">
+                  <button class="transparent_btn toggle_box">
+                    <svg class="expand_icon" xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
+                      <path d="M5 8L0.669872 0.5L9.33013 0.5L5 8Z" fill="#CEA075"></path>
+                    </svg>
                   </button>
                 </div>
-                <div class="box_inner_wrap">
-                  <button class="transparent_btn box_btn __spot box_scan_btn text __added" data-step="2" data-success-text="Скан коробки 1 добавлен" data-scan-type="qrcode">
-                    <span class="box_status __qr">Скан коробки 2 добавлен</span>
-                    <img src="./img/qr_placeholder.png" alt="" class="preview __qr">
-                  </button>
-                  <input type="file" class="box_img_input" accept="image/*" capture data-step="2">
-                  <button class="transparent_btn box_btn __spot box_img_btn text __added" data-step="2" data-success-text="Фото передачи в терминал добавлено">
-                    <span class="box_status __img">Фото передачи в терминал добавлено</span>
-                    <img src="./img/box_img_placeholder.png" alt="" class="preview __img">
-                  </button>
-                </div>
-                <div class="box_inner_wrap">
-                  <button class="transparent_btn box_btn __spot box_scan_btn text" data-step="3" data-success-text="Скан места добавлен" data-scan-type="code">
-                    <span class="box_status __qr">Отсканируйте коробку 2</span>
-                    <img src="./img/ico/img_placeholder.png" alt="" class="preview __qr">
-                  </button>
-                  <input type="file" class="box_img_input" accept="image/*" capture data-step="3">
-                  <button class="transparent_btn box_btn __spot box_img_btn text" data-step="3" data-success-text="Фото хранения добавлено" disabled autocomplete="off">
-                    <span class="box_status __img">Добавьте фото выдачи клиенту</span>
-                    <img src="./img/ico/img_placeholder.png" alt="" class="preview __img">
-                  </button>
-                </div>
-                <button class="transparent_btn toggle_box">
-                  <svg class="expand_icon" xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
-                    <path d="M5 8L0.669872 0.5L9.33013 0.5L5 8Z" fill="#CEA075"></path>
-                  </svg>
-                </button>
               </div>
             </div>
             <div class="bottom_btns box_wrap">
-              <button class="beige_btn bottom_btn accept_btn" disabled autocomplete="off">На хранение</button>
+              <button class="beige_btn bottom_btn __white add_box __hidden">Добавить еще коробку</button>
+              <button class="beige_btn bottom_btn accept_btn" autocomplete="off" disabled="disabled">Передан в терминал</button>
             </div>
           </div>
           <button class="transparent_btn toggle_order">

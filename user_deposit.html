@@ -269,28 +269,23 @@
         </div>
       </div>
     </div>
-    <div class="form_dialog __box_add" data-step="box_add">
-      <p class="form_title">Введите габариты и добавьте еще коробки при необходимости</p>
-      <div class="box_list">
-        <button class="transparent_btn box_edit text">
-          <p class="info">Коробка 1: 1,2 кг, 50х50х80. В коробке две лампы</p>
-          <img src="./img/ico/edit_pencil.png" alt="" class="icon">
-        </button>
-        <button class="transparent_btn box_edit text">
-          <p class="info">Коробка 2: 2 кг, 100х100х80. В коробке две лампы</p>
-          <img src="./img/ico/edit_pencil.png" alt="" class="icon">
-        </button>
+    <div class="form_dialog __box_add" data-step="box_add" data-id-origin="0">
+      <p class="form_title">Добавьте необходимое количество коробок</p>
+      <div class="box_list __hidden">
       </div>
       <div class="box_input">
-        <p class="text">Коробка 3</p>
-        <div class="form_fields __4">
-          <input type="number" min="0" class="form_input" placeholder="Вес, кг">
-          <input type="number" min="0" class="form_input" placeholder="Длина, см">
-          <input type="number" min="0" class="form_input" placeholder="Ширина, см">
-          <input type="number" min="0" class="form_input" placeholder="Высота, см">
-          <input type="text" class="form_input __wide" placeholder="Комментарий (можно указать, какие вещи хранятся в коробке)">
+        <div class="topper_wrap __hidden">
+          <p class="text topper">Коробка <span class="box_number">1</span></p>
+          <button class="transparent_btn delete_box">Удалить</button>
         </div>
-        <button class="beige_btn __white box_add">Добавить еще коробку</button>
+        <div class="form_fields __4 __hidden" data-mode="create" data-target-id="">
+          <input type="text" min="0" class="form_input __weight __number" placeholder="Вес, кг" autocomplete="off">
+          <input type="text" min="0" class="form_input __length __number" placeholder="Длина, см" autocomplete="off">
+          <input type="text" min="0" class="form_input __width __number" placeholder="Ширина, см" autocomplete="off">
+          <input type="text" min="0" class="form_input __height __number" placeholder="Высота, см" autocomplete="off">
+          <input type="text" class="form_input __wide __comment" placeholder="Комментарий (можно указать, какие вещи хранятся в коробке)" autocomplete="off">
+        </div>
+        <button class="beige_btn __white box_add __initial">Добавить коробку</button>
       </div>
     </div>
     <button class="form_next __deposit beige_btn">Далее</button>
